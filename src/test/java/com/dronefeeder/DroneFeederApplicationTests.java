@@ -1,10 +1,12 @@
 package com.dronefeeder;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -56,6 +58,21 @@ class DroneFeederApplicationTests {
     result
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
+        .andExpect(jsonPath("$.brand").value(droneOne.getBrand()))
+        .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()))
+        .andExpect(jsonPath("$.serialNumber").value(droneOne.getSerialNumber()));
+  }
+  
+  @Test
+  void mustAddNewDrone() throws Exception {
+    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+
+    final var result = mockMvc.perform(post("/dronefeeder/drone/"));
+ 
+    result
+        .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isCreated())
         .andExpect(jsonPath("$.brand").value(droneOne.getBrand()))
         .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()))
         .andExpect(jsonPath("$.serialNumber").value(droneOne.getSerialNumber()));
