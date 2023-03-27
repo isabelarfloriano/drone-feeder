@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,15 +35,29 @@ class DroneFeederApplicationTests {
     droneRepository.save(droneTwo);
     droneRepository.save(droneThree);
    
-     result
-       .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-       .andExpect(status().isOk())
-       .andExpect(jsonPath("$[0].brand").value(droneOne.getBrand()));
-       .andExpect(jsonPath("$[0].modelName").value(droneOne.getModelName()));
-       .andExpect(jsonPath("$[0].serialNumber").value(droneOne.getSerialNumber()));
-       .andExpect(jsonPath("$[2].brand").value(droneThree.getBrand()));
-       .andExpect(jsonPath("$[2].modelName").value(droneThree.getModelName()));
-       .andExpect(jsonPath("$[2].serialNumber").value(droneThree.getSerialNumber()));
-   }
+    result
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].brand").value(droneOne.getBrand()))
+        .andExpect(jsonPath("$[0].modelName").value(droneOne.getModelName()))
+        .andExpect(jsonPath("$[0].serialNumber").value(droneOne.getSerialNumber()))
+        .andExpect(jsonPath("$[2].brand").value(droneThree.getBrand()))
+        .andExpect(jsonPath("$[2].modelName").value(droneThree.getModelName()))
+        .andExpect(jsonPath("$[2].serialNumber").value(droneThree.getSerialNumber()));
+  }
 
+  @Test
+  void mustReturnTheDroneById() throws Exception {
+    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(droneOne);
+
+    final var result = mockMvc.perform(get("/dronefeeder/drone/" + droneOne.getId()));
+ 
+    result
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.brand").value(droneOne.getBrand()))
+        .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()))
+        .andExpect(jsonPath("$.serialNumber").value(droneOne.getSerialNumber()));
+  }
 }
