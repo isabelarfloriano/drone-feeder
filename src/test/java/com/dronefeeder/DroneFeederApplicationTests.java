@@ -24,6 +24,11 @@ class DroneFeederApplicationTests {
 
   @SpyBean
   private DroneRepository droneRepository;
+  
+  @BeforeEach
+  public void setUp() {
+    droneRepository.deleteAll();
+  }
 
   @Test
    void mustReturnListWithAllDrones() throws Exception {
