@@ -77,4 +77,18 @@ class DroneFeederApplicationTests {
         .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()))
         .andExpect(jsonPath("$.serialNumber").value(droneOne.getSerialNumber()));
   }
+  
+  @Test
+  void mustThrowErrorIfDroneAlreadyExists() throws Exception {
+    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(droneOne);
+    
+    final var result = mockMvc.perform(post("/dronefeeder/drone/"));
+ 
+    result
+        .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isConflict())
+        .andExpect(jsonPath("$.message").value("Drone is already registered!"));
+  }
 }
