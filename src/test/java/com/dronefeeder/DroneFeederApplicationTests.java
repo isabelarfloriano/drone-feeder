@@ -109,4 +109,23 @@ class DroneFeederApplicationTests {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
   }
+  
+  @Test
+  void mustUpdateTheDroneById() throws Exception {
+    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+    final var droneOneUpdated = new DroneFeeder("Heygelo", "S91", "123456");
+    
+    droneRepository.save(droneOne);
+
+    mockMvc.perform(get("/dronefeeder/drone/" + droneOne.getId()))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()));
+    
+    final var result = mockMvc.perform(put("/dronefeeder/drone/" + droneOneUpdated.getId()));
+    
+    result
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.modelName").value(droneOneUpdated.getModelName()));
+  }
 }
