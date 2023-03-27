@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -95,5 +96,17 @@ class DroneFeederApplicationTests {
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isConflict())
         .andExpect(jsonPath("$.message").value("Drone is already registered!"));
+  }
+  
+  @Test
+  void mustDeleteTheDroneById() throws Exception {
+    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(droneOne);
+
+    final var result = mockMvc.perform(delete("/dronefeeder/drone/" + droneOne.getId()));
+ 
+    result
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
   }
 }
