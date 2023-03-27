@@ -24,7 +24,7 @@ class DroneFeederApplicationTests {
 
   @Test
    void mustReturnListWithAllDrones() throws Exception {
-    final var result = mockMvc.perform(get("/dronefeeder/all"));
+    final var result = mockMvc.perform(get("/dronefeeder/drone/all"));
 
     final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
     final var droneTwo = new DroneFeeder("Deerc", "D20", "654321");
