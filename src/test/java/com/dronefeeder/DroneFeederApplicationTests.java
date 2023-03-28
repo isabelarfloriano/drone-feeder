@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -29,6 +30,7 @@ class DroneFeederApplicationTests {
   @BeforeEach
   public void setUp() {
     droneRepository.deleteAll();
+    this.droneRepository = new DroneRepository()
   }
 
   @Test
@@ -59,7 +61,7 @@ class DroneFeederApplicationTests {
     final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(droneOne);
 
-    final var result = mockMvc.perform(get("/dronefeeder/drone/" + droneOne.getId()));
+    final ResultActions result = mockMvc.perform(get("/dronefeeder/drone/" + droneOne.getId()));
  
     result
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -73,7 +75,7 @@ class DroneFeederApplicationTests {
   void mustAddNewDrone() throws Exception {
     final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
 
-    final var result = mockMvc.perform(post("/dronefeeder/drone/"));
+    final ResultActions result = mockMvc.perform(post("/dronefeeder/drone/"));
  
     result
         .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
@@ -89,7 +91,7 @@ class DroneFeederApplicationTests {
     final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(droneOne);
     
-    final var result = mockMvc.perform(post("/dronefeeder/drone/"));
+    final ResultActions result = mockMvc.perform(post("/dronefeeder/drone/"));
  
     result
         .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
@@ -121,7 +123,7 @@ class DroneFeederApplicationTests {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()));
     
-    final var result = mockMvc.perform(put("/dronefeeder/drone/" + droneOneUpdated.getId()));
+    final ResultActions result = mockMvc.perform(put("/dronefeeder/drone/" + droneOneUpdated.getId()));
     
     result
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
