@@ -16,7 +16,7 @@ spring:
     
     password: ${MYSQL_ROOT_PASSWORD}
     
-    driverClassName: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
   
