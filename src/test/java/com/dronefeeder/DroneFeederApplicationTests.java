@@ -106,6 +106,19 @@ class DroneFeederApplicationTests {
   }
 
   @Test
+  void mustThrowErrorIfDroneNotFound() throws Exception {
+    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+
+    final ResultActions result = mockMvc.perform(delete("/dronefeeder/drone/" + droneOne.getId()));
+
+    result
+        .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.message").value("Matching object not found"));
+  }
+  
+  @Test
   void mustUpdateTheDroneById() throws Exception {
     final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
     final var droneOneUpdated = new DroneFeeder("Heygelo", "S91", "123456");
