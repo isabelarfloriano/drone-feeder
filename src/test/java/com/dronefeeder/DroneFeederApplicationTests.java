@@ -1,11 +1,15 @@
 package com.dronefeeder;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.dronefeeder.model.DroneFeeder;
+import com.dronefeeder.repository.DroneRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -78,14 +82,15 @@ class DroneFeederApplicationTests {
   void mustAddNewDrone() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
-    final ResultActions result = mockMvc.perform(post("/dronefeeder/drone/"));
-
-    result
-        .andExpect(content(new ObjectMapper().writeValueAsString(drone))
-            .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated()).andExpect(jsonPath("$.brand").value(drone.getBrand()))
-        .andExpect(jsonPath("$.modelName").value(drone.getModelName()))
-        .andExpect(jsonPath("$.serialNumber").value(drone.getSerialNumber()));
+    final var result = mockMvc
+        .perform(post("/dronefeeder/drone")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(new ObjectMapper().writeValueAsString(drone)));
+    
+    result    
+    .andExpect(status().isCreated()).andExpect(jsonPath("$.brand").value(drone.getBrand()))
+    .andExpect(jsonPath("$.modelName").value(drone.getModelName()))
+    .andExpect(jsonPath("$.serialNumber").value(drone.getSerialNumber()));
   }
 
   @Test
@@ -97,9 +102,9 @@ class DroneFeederApplicationTests {
 
     final ResultActions result = mockMvc.perform(post("/dronefeeder/drone/"));
 
-    resultMust throw error if the drone was not found.
+    result
         .andExpect(content(new ObjectMapper().writeValueAsString(drone))
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON))        
         .andExpect(status().isConflict())
         .andExpect(jsonPath("$.message").value("Drone is already registered!"));
   }
