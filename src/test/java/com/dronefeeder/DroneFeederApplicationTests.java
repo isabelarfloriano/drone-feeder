@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,6 +35,8 @@ class DroneFeederApplicationTests {
   }
 
   @Test
+  @Order(1)
+  @DisplayName("1 - GET/ Must return all drones registered.")
   void mustReturnListWithAllDrones() throws Exception {
     final var result = mockMvc.perform(get("/dronefeeder/drone/"));
 
@@ -54,6 +58,8 @@ class DroneFeederApplicationTests {
   }
 
   @Test
+  @Order(2)
+  @DisplayName("2 - GET/ Must return the drone registered by ID.")
   void mustReturnTheDroneById() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
@@ -67,6 +73,8 @@ class DroneFeederApplicationTests {
   }
 
   @Test
+  @Order(3)
+  @DisplayName("3 - POST/ Must add a new drone.")
   void mustAddNewDrone() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
@@ -81,13 +89,15 @@ class DroneFeederApplicationTests {
   }
 
   @Test
+  @Order(4)
+  @DisplayName("4 - POST/ Must throw error if the drone already is registered.")
   void mustThrowErrorIfDroneAlreadyExists() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
 
     final ResultActions result = mockMvc.perform(post("/dronefeeder/drone/"));
 
-    result
+    resultMust throw error if the drone was not found.
         .andExpect(content(new ObjectMapper().writeValueAsString(drone))
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isConflict())
@@ -95,6 +105,8 @@ class DroneFeederApplicationTests {
   }
 
   @Test
+  @Order(5)
+  @DisplayName("5 - DELETE/ Must delete the drone registered by ID.")
   void mustDeleteTheDroneById() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
@@ -105,6 +117,8 @@ class DroneFeederApplicationTests {
   }
 
   @Test
+  @Order(6)
+  @DisplayName("6 - DELETE/ Must throw error if the drone was not found.")
   void mustThrowErrorIfDroneNotFound() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
@@ -118,6 +132,8 @@ class DroneFeederApplicationTests {
   }
   
   @Test
+  @Order(7)
+  @DisplayName("7 - DELETE/ Must update the drone registered by ID.")
   void mustUpdateTheDroneById() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     final var droneUpdated = new DroneFeeder("Heygelo", "S91", "123456");
@@ -136,6 +152,8 @@ class DroneFeederApplicationTests {
   }
   
   @Test
+  @Order(8)
+  @DisplayName("8 - PUT/ Must throw error if the drone was not found.")
   void mustThrowErrorCaseDroneNotFound() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
