@@ -27,11 +27,10 @@ class DroneFeederApplicationTests {
   @SpyBean
   private DroneRepository droneRepository;
 
-  // @BeforeEach
-  // public void setUp() {
-  // droneRepository.deleteAll();
-  //// this.droneRepository = new DroneRepository()
-  // }
+  @BeforeEach
+  public void setUp() {
+    droneRepository.deleteAll();
+  }
 
   @Test
   void mustReturnListWithAllDrones() throws Exception {
@@ -56,40 +55,40 @@ class DroneFeederApplicationTests {
 
   @Test
   void mustReturnTheDroneById() throws Exception {
-    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
-    droneRepository.save(droneOne);
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(drone);
 
-    final ResultActions result = mockMvc.perform(get("/dronefeeder/drone/" + droneOne.getId()));
+    final ResultActions result = mockMvc.perform(get("/dronefeeder/drone/" + drone.getId()));
 
     result.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-        .andExpect(jsonPath("$.brand").value(droneOne.getBrand()))
-        .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()))
-        .andExpect(jsonPath("$.serialNumber").value(droneOne.getSerialNumber()));
+        .andExpect(jsonPath("$.brand").value(drone.getBrand()))
+        .andExpect(jsonPath("$.modelName").value(drone.getModelName()))
+        .andExpect(jsonPath("$.serialNumber").value(drone.getSerialNumber()));
   }
 
   @Test
   void mustAddNewDrone() throws Exception {
-    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
     final ResultActions result = mockMvc.perform(post("/dronefeeder/drone/"));
 
     result
-        .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
+        .andExpect(content(new ObjectMapper().writeValueAsString(drone))
             .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated()).andExpect(jsonPath("$.brand").value(droneOne.getBrand()))
-        .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()))
-        .andExpect(jsonPath("$.serialNumber").value(droneOne.getSerialNumber()));
+        .andExpect(status().isCreated()).andExpect(jsonPath("$.brand").value(drone.getBrand()))
+        .andExpect(jsonPath("$.modelName").value(drone.getModelName()))
+        .andExpect(jsonPath("$.serialNumber").value(drone.getSerialNumber()));
   }
 
   @Test
   void mustThrowErrorIfDroneAlreadyExists() throws Exception {
-    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
-    droneRepository.save(droneOne);
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(drone);
 
     final ResultActions result = mockMvc.perform(post("/dronefeeder/drone/"));
 
     result
-        .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
+        .andExpect(content(new ObjectMapper().writeValueAsString(drone))
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isConflict())
         .andExpect(jsonPath("$.message").value("Drone is already registered!"));
@@ -97,22 +96,22 @@ class DroneFeederApplicationTests {
 
   @Test
   void mustDeleteTheDroneById() throws Exception {
-    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
-    droneRepository.save(droneOne);
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(drone);
 
-    final var result = mockMvc.perform(delete("/dronefeeder/drone/" + droneOne.getId()));
+    final var result = mockMvc.perform(delete("/dronefeeder/drone/" + drone.getId()));
 
     result.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
   }
 
   @Test
   void mustThrowErrorIfDroneNotFound() throws Exception {
-    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
-    final ResultActions result = mockMvc.perform(delete("/dronefeeder/drone/" + droneOne.getId()));
+    final ResultActions result = mockMvc.perform(delete("/dronefeeder/drone/" + drone.getId()));
 
     result
-        .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
+        .andExpect(content(new ObjectMapper().writeValueAsString(drone))
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.message").value("Matching object not found"));
@@ -120,30 +119,30 @@ class DroneFeederApplicationTests {
   
   @Test
   void mustUpdateTheDroneById() throws Exception {
-    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
-    final var droneOneUpdated = new DroneFeeder("Heygelo", "S91", "123456");
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    final var droneUpdated = new DroneFeeder("Heygelo", "S91", "123456");
 
-    droneRepository.save(droneOne);
+    droneRepository.save(drone);
 
-    mockMvc.perform(get("/dronefeeder/drone/" + droneOne.getId()))
+    mockMvc.perform(get("/dronefeeder/drone/" + drone.getId()))
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.modelName").value(droneOne.getModelName()));
+        .andExpect(jsonPath("$.modelName").value(drone.getModelName()));
 
     final ResultActions result =
-        mockMvc.perform(put("/dronefeeder/drone/" + droneOneUpdated.getId()));
+        mockMvc.perform(put("/dronefeeder/drone/" + droneUpdated.getId()));
 
     result.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-        .andExpect(jsonPath("$.modelName").value(droneOneUpdated.getModelName()));
+        .andExpect(jsonPath("$.modelName").value(droneUpdated.getModelName()));
   }
   
   @Test
   void mustThrowErrorCaseDroneNotFound() throws Exception {
-    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
-    final ResultActions result = mockMvc.perform(put("/dronefeeder/drone/" + droneOne.getId()));
+    final ResultActions result = mockMvc.perform(put("/dronefeeder/drone/" + drone.getId()));
 
     result
-        .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
+        .andExpect(content(new ObjectMapper().writeValueAsString(drone))
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.message").value("Matching object not found"));
