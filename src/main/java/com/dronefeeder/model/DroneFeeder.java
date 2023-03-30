@@ -1,14 +1,14 @@
 package com.dronefeeder.model;
 
 
-import jakarta.persistence.CascadeType;
+//import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+//import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
+//import java.util.List;
 
 /**
  * DroneFeeder class.
@@ -25,11 +25,11 @@ public class DroneFeeder {
   private String modelName;
   private String serialNumber;
 
-  @OneToMany(mappedBy = "dronefeeder", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Delivery> deliveries;
+  //@OneToMany(mappedBy = "dronefeeder", cascade = CascadeType.ALL, orphanRemoval = true)
+  //private List<Delivery> deliveries;
 
-  @OneToMany(mappedBy = "dronefeeder", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Videos> videos;
+  //@OneToMany(mappedBy = "dronefeeder", cascade = CascadeType.ALL, orphanRemoval = true)
+  //private List<Videos> videos;
 
   public DroneFeeder() {}
   
