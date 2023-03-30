@@ -135,4 +135,17 @@ class DroneFeederApplicationTests {
     result.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
         .andExpect(jsonPath("$.modelName").value(droneOneUpdated.getModelName()));
   }
+  
+  @Test
+  void mustThrowErrorCaseDroneNotFound() throws Exception {
+    final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
+
+    final ResultActions result = mockMvc.perform(put("/dronefeeder/drone/" + droneOne.getId()));
+
+    result
+        .andExpect(content(new ObjectMapper().writeValueAsString(droneOne))
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.message").value("Matching object not found"));
+  }
 }
