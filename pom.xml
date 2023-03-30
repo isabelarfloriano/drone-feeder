@@ -16,7 +16,6 @@
 	<description>Project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
-		<spring.boot.maven.compiler.release>11</spring.boot.maven.compiler.release>
 	</properties>
 	<dependencies>
 		<dependency>
