@@ -158,7 +158,7 @@ class DroneFeederApplicationTests {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
     final ResultActions result = mockMvc.perform(put("/dronefeeder/drone/" + drone.getId()));
-
+  
     result
         .andExpect(content(new ObjectMapper().writeValueAsString(drone))
             .contentType(MediaType.APPLICATION_JSON))
