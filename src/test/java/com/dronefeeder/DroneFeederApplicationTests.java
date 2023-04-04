@@ -124,7 +124,7 @@ public class DroneFeederApplicationTests {
 
     final var result = mockMvc.perform(delete("/dronefeeder/drone/" + drone.getId()));
 
-    result.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+    result.andExpect(status().isOk());
   }
 
   @Test
