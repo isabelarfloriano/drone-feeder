@@ -45,8 +45,6 @@ public class DroneFeederApplicationTests {
   @Order(1)
   @DisplayName("1 - GET/ Must return all drones registered.")
   void mustReturnListWithAllDrones() throws Exception {
-    final var result = mockMvc.perform(get("/dronefeeder/drone/"));
-
     final var droneOne = new DroneFeeder("Heygelo", "S90", "123456");
     final var droneTwo = new DroneFeeder("Deerc", "D20", "654321");
     final var droneThree = new DroneFeeder("Neheme", "NH760", "123987");
@@ -54,8 +52,12 @@ public class DroneFeederApplicationTests {
     droneRepository.save(droneOne);
     droneRepository.save(droneTwo);
     droneRepository.save(droneThree);
+    
+    final var result =
+        mockMvc.perform(get("/dronefeeder/drone/").contentType(MediaType.APPLICATION_JSON)); 
 
-    result.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+    result
+        .andExpect(status().isOk())
         .andExpect(jsonPath("$[0].brand").value(droneOne.getBrand()))
         .andExpect(jsonPath("$[0].modelName").value(droneOne.getModelName()))
         .andExpect(jsonPath("$[0].serialNumber").value(droneOne.getSerialNumber()))
