@@ -113,7 +113,7 @@ public class DroneFeederApplicationTests {
 
     result      
         .andExpect(status().isConflict())
-        .andExpect(jsonPath("$.message").value("Drone is already registered!"));
+        .andExpect(jsonPath("$.error").value("Drone is already registered!"));
   }
 
   @Test
