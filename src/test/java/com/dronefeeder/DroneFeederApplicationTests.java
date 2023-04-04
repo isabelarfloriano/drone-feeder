@@ -91,7 +91,7 @@ public class DroneFeederApplicationTests {
             .content(new ObjectMapper().writeValueAsString(drone)));
     
     result    
-    .andExpect(status().isCreated()).andExpect(jsonPath("$.brand").value(drone.getBrand()))
+    .andExpect(status().isOk()).andExpect(jsonPath("$.brand").value(drone.getBrand()))
     .andExpect(jsonPath("$.modelName").value(drone.getModelName()))
     .andExpect(jsonPath("$.serialNumber").value(drone.getSerialNumber()));
   }
