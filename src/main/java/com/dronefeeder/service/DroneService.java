@@ -30,14 +30,8 @@ public class DroneService {
    * create method.
    */
   public DroneFeeder create(DroneFeeder drone) {
-    final var serialNumber = drone.getSerialNumber();
-
-    List<DroneFeeder> allDrones = droneRepository.findAll();
-
-    for (int i = 0; i < allDrones.size(); i += 1) {
-      if (allDrones.get(i).getSerialNumber() == serialNumber) {
-        throw new AlreadyExistsException("Drone is already registered!");
-      }
+    if (droneRepository.existsBySerialNumber(drone.getSerialNumber())) {
+      throw new AlreadyExistsException("Drone is already registered!");
     }
     
     return droneRepository.save(drone);
