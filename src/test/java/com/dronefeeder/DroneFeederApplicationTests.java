@@ -145,7 +145,7 @@ public class DroneFeederApplicationTests {
   
   @Test
   @Order(7)
-  @DisplayName("7 - DELETE/ Must update the drone registered by ID.")
+  @DisplayName("7 - UPDATE/ Must update the drone registered by ID.")
   void mustUpdateTheDroneById() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     final var droneUpdated = new DroneFeeder("Heygelo", "S91", "123456");
@@ -157,9 +157,11 @@ public class DroneFeederApplicationTests {
         .andExpect(jsonPath("$.modelName").value(drone.getModelName()));
 
     final ResultActions result =
-        mockMvc.perform(put("/dronefeeder/drone/" + droneUpdated.getId()));
+        mockMvc.perform(put("/dronefeeder/drone/" + drone.getId())
+            .content(new ObjectMapper().writeValueAsString(droneUpdated))
+            .contentType(MediaType.APPLICATION_JSON));
 
-    result.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+    result.andExpect(status().isOk())
         .andExpect(jsonPath("$.modelName").value(droneUpdated.getModelName()));
   }
   
