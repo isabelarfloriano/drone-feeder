@@ -142,7 +142,7 @@ public class DroneFeederApplicationTests {
   
   @Test
   @Order(7)
-  @DisplayName("7 - UPDATE/ Must update the drone registered by ID.")
+  @DisplayName("7 - PUT/ Must update the drone registered by ID.")
   void mustUpdateTheDroneById() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     final var droneUpdated = new DroneFeeder("Heygelo", "S91", "123456");
@@ -164,17 +164,17 @@ public class DroneFeederApplicationTests {
   
   @Test
   @Order(8)
-  @DisplayName("8 - PUT/ Must throw error if the drone was not found.")
+  @DisplayName("8 - PUT/ Must throw error if the drone to be updated was not found.")
   void mustThrowErrorCaseDroneNotFound() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
-
+    
     final var result = mockMvc
-        .perform(put("/dronefeeder/drone" + drone.getId())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(drone)));
+        .perform(put("/dronefeeder/drone/" + new Random().nextInt())
+          .content(new ObjectMapper().writeValueAsString(drone))
+          .contentType(MediaType.APPLICATION_JSON));
   
     result
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("Matching object not found"));
+        .andExpect(jsonPath("$.error").value("Matching object not found"));
   }
 }
