@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.dronefeeder.model.DroneFeeder;
 import com.dronefeeder.repository.DroneRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -131,16 +132,12 @@ public class DroneFeederApplicationTests {
   @Order(6)
   @DisplayName("6 - DELETE/ Must throw error if the drone was not found.")
   void mustThrowErrorIfDroneNotFound() throws Exception {
-    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
-
     final var result = mockMvc
-        .perform(delete("/dronefeeder/drone")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(drone)));
+        .perform(delete("/dronefeeder/drone/" + new Random().nextInt()));
 
     result
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("Matching object not found"));
+        .andExpect(jsonPath("$.error").value("Matching object not found"));
   }
   
   @Test
@@ -172,7 +169,7 @@ public class DroneFeederApplicationTests {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
     final var result = mockMvc
-        .perform(put("/dronefeeder/drone")
+        .perform(put("/dronefeeder/drone" + drone.getId())
             .contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(drone)));
   
