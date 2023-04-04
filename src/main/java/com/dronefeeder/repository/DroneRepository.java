@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * DroneRepository interface.
  */
-public interface DroneRepository extends JpaRepository<DroneFeeder, Long> {}
+public interface DroneRepository extends JpaRepository<DroneFeeder, Long> {
+  boolean existsBySerialNumber(String serialNumber);
+}
