@@ -1,6 +1,5 @@
 package com.dronefeeder.model;
 
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,11 +23,11 @@ public class Delivery {
   
   private String longitude;
 
-  private boolean deliveryStatus;
+  private String deliveryStatus;
 
-  private Date currentDateAndTime;
+  private String orderDateAndTime;
 
-  private Date deliveryDateAndTime;
+  private String deliveryDateAndTime;
   
   @ManyToOne
   @JoinColumn(name = "dronefeeder_id")
@@ -42,8 +41,8 @@ public class Delivery {
    * Delivery constructor.
    */
   public Delivery() {
-    this.currentDateAndTime = new Date();
-    this.deliveryStatus = false;
+    this.orderDateAndTime = null;
+    this.deliveryStatus = "pendente";
     this.deliveryDateAndTime = null;
   }
   
@@ -60,8 +59,8 @@ public class Delivery {
   //    this.longitude = longitude;
   //    this.dronefeeder = dronefeeder;
   //    this.video = video;
-  //    this.currentDateAndTime = new Date();
-  //    this.deliveryStatus = false;
+  //    this.orderDateAndTime = null;
+  //    this.deliveryStatus = "pendente";
   //    this.deliveryDateAndTime = null;
   //  }
 
@@ -89,27 +88,27 @@ public class Delivery {
     this.longitude = longitude;
   }
 
-  public boolean isDeliveryStatus() {
+  public String getDeliveryStatus() {
     return deliveryStatus;
   }
 
-  public void setDeliveryStatus(boolean deliveryStatus) {
+  public void setDeliveryStatus(String deliveryStatus) {
     this.deliveryStatus = deliveryStatus;
   }
 
-  public Date getCurrentDateAndTime() {
-    return currentDateAndTime;
+  public String getOrderDateAndTime() {
+    return orderDateAndTime;
   }
 
-  public void setCurrentDateAndTime(Date currentDateAndTime) {
-    this.currentDateAndTime = currentDateAndTime;
+  public void setOderDateAndTime(String orderDateAndTime) {
+    this.orderDateAndTime = orderDateAndTime;
   }
 
-  public Date getDeliveryDateAndTime() {
+  public String getDeliveryDateAndTime() {
     return deliveryDateAndTime;
   }
 
-  public void setDeliveryDateAndTime(Date deliveryDateAndTime) {
+  public void setDeliveryDateAndTime(String deliveryDateAndTime) {
     this.deliveryDateAndTime = deliveryDateAndTime;
   }
 
