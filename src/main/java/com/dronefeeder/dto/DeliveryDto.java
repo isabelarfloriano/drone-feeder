@@ -6,8 +6,8 @@ package com.dronefeeder.dto;
 public class DeliveryDto {
   private String latitude;
   private String longitude;
-  private Long dronefeeder;
-  private Long video;
+  private Long dronefeederId;
+  private Long videoId;
   private String deliveryDateAndTime;
   private String orderDateAndTime;
   
@@ -15,12 +15,12 @@ public class DeliveryDto {
    * DeliveryDto constructor.
    */
   public DeliveryDto(
-      String latitude, String longitude, Long dronefeeder, Long video,
+      String latitude, String longitude, Long dronefeederId, Long videoId,
       String deliveryDateAndTime, String orderDateAndTime) {
     this.setLatitude(latitude);
     this.setLongitude(longitude);
-    this.setDronefeeder(dronefeeder);
-    this.setVideo(video);
+    this.setDronefeederId(dronefeederId);
+    this.setVideoId(videoId);
     this.setDeliveryDateAndTime(deliveryDateAndTime);
     this.setOrderDateAndTime(orderDateAndTime);
   }
@@ -41,20 +41,20 @@ public class DeliveryDto {
     this.longitude = longitude;
   }
 
-  public Long getDronefeeder() {
-    return dronefeeder;
+  public Long getDronefeederId() {
+    return dronefeederId;
   }
 
-  public void setDronefeeder(Long dronefeeder) {
-    this.dronefeeder = dronefeeder;
+  public void setDronefeederId(Long dronefeederId) {
+    this.dronefeederId = dronefeederId;
   }
 
-  public Long getVideo() {
-    return video;
+  public Long getVideoId() {
+    return videoId;
   }
 
-  public void setVideo(Long video) {
-    this.video = video;
+  public void setVideoId(Long videoId) {
+    this.videoId = videoId;
   }
 
   public String getDeliveryDateAndTime() {
