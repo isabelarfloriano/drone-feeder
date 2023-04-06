@@ -33,9 +33,9 @@ public class Delivery {
   @JoinColumn(name = "dronefeeder_id")
   private DroneFeeder dronefeeder;
   
-  //  @OneToOne
-  //  @JoinColumn(name = "video_id")
-  //  private Video video;
+  //    @OneToOne
+  //    @JoinColumn(name = "video_id")
+  //    private Video video;
   
   /**
    * Delivery constructor.
@@ -51,18 +51,19 @@ public class Delivery {
     this.longitude = longitude;
   }
   
-  //  /**
-  //   * Delivery constructor.
-  //   */
-  //  public Delivery(String latitude, String longitude, DroneFeeder dronefeeder, Video video) {
-  //    this.latitude = latitude;
-  //    this.longitude = longitude;
-  //    this.dronefeeder = dronefeeder;
-  //    this.video = video;
-  //    this.orderDateAndTime = null;
-  //    this.deliveryStatus = "pendente";
-  //    this.deliveryDateAndTime = null;
-  //  }
+  /**
+   * Delivery constructor.
+   */
+  public Delivery(
+      String latitude, String longitude, DroneFeeder dronefeeder,
+      String orderDateAndTime, String deliveryDateAndTime) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.dronefeeder = dronefeeder;
+    this.orderDateAndTime = orderDateAndTime;
+    this.deliveryStatus = "pendente";
+    this.deliveryDateAndTime = deliveryDateAndTime;
+  }
 
   public Long getId() {
     return id;
