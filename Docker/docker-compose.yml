@@ -16,9 +16,8 @@ services:
     ports:
       - "3307:3306"
     environment:
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_DATABASE=drone-feeder
-      - MYSQL_USER=root
+      - MYSQL_DATABASE=dronefeeder
+      - MYSQL_ROOT_PASSWORD=password
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - ./Docker/volume_mysql:/var/lib/mysql
+      - ./volume_mysql:/var/lib/mysql
