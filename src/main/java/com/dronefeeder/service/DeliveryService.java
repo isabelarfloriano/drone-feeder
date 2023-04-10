@@ -2,7 +2,6 @@ package com.dronefeeder.service;
 
 import com.dronefeeder.exception.NotFoundException;
 import com.dronefeeder.model.Delivery;
-import com.dronefeeder.model.DroneFeeder;
 import com.dronefeeder.repository.DeliveryRepository;
 import com.dronefeeder.repository.DroneRepository;
 import java.util.List;
@@ -35,16 +34,12 @@ public class DeliveryService {
    */
   public Delivery create(Delivery delivery) {
     droneRepository.findById(delivery.getDronefeeder().getId())
-        .orElseThrow(() ->
-            new NotFoundException("The delivery must be associated to an existing drone"));
-
-    DroneFeeder drone = delivery.getDronefeeder();
-
-    drone.addDelivery(delivery);
+         .orElseThrow(() ->
+             new NotFoundException("The delivery must be associated to an existing drone"));
     
     deliveryRepository.save(delivery);
-
-    return drone.getDeliveries().get(drone.getDeliveries().size() - 1);
+ 
+    return delivery;
   }
   
   /**

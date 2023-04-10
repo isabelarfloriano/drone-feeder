@@ -31,32 +31,12 @@ public class Delivery {
   private String deliveryStatus;
   
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "dronefeeder")
+  @JoinColumn(name = "dronefeeder_id")
   private DroneFeeder dronefeeder;
   
   //    @OneToOne
   //    @JoinColumn(name = "video_id")
   //    private Video video;
-  
-  /**
-   * Delivery constructor.
-   */
-  public Delivery() {}
-  
-  /**
-   * Delivery constructor.
-   */
-  public Delivery(
-      String latitude, String longitude, DroneFeeder dronefeeder,
-      String orderDateAndTime, String deliveryDateAndTime, String deliveryStatus) {
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.dronefeeder = dronefeeder;
-    this.orderDateAndTime = orderDateAndTime;
-    this.deliveryDateAndTime = deliveryDateAndTime;
-    this.deliveryStatus = deliveryStatus;
-    
-  }
 
   public Long getId() {
     return id;
