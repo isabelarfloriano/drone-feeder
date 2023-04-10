@@ -1,8 +1,7 @@
 package com.dronefeeder.controller;
 
 import com.dronefeeder.model.Delivery;
-import com.dronefeeder.model.DroneFeeder;
-import com.dronefeeder.service.DroneService;
+import com.dronefeeder.service.DeliveryService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,42 +14,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * DroneController class.
+ * DeliveryController class.
  */
 @RestController
-@RequestMapping("/dronefeeder/drone")
-public class DroneController {
+@RequestMapping("/dronefeeder/delivery")
+public class DeliveryController {
 
   @Autowired
-  DroneService droneService;
-  
+  DeliveryService deliveryService;
+
   @GetMapping
-  public List<DroneFeeder> findAll() {
-    return droneService.findAll();
+  public List<Delivery> findAll() {
+    return deliveryService.findAll();
   }
-  
+
   @GetMapping("/{id}")
-  public DroneFeeder findById(@PathVariable Long id) {
-    return droneService.findById(id);
+  public Delivery findById(@PathVariable Long id) {
+    return deliveryService.findById(id);
   }
-  
-  @GetMapping("/{id}/deliveries")
-  public List<Delivery> getDeliveries(@PathVariable Long id) {
-    return droneService.getDeliveries(id);
-  }
-  
+
   @PostMapping
-  public DroneFeeder create(@RequestBody DroneFeeder drone) {
-    return droneService.create(drone);
+  public Delivery create(@RequestBody Delivery delivery) {
+    return deliveryService.create(delivery);
+  }
+
+  @PutMapping("/{id}")
+  public Delivery update(@RequestBody Delivery delivery, @PathVariable Long id) {
+    return deliveryService.update(id, delivery);
   }
   
-  @PutMapping("/{id}")
-  public DroneFeeder update(@RequestBody DroneFeeder drone, @PathVariable Long id) {
-    return droneService.update(id, drone);
+  @PutMapping("/{id}/deliveryFinished")
+  public Delivery updateStatus(@PathVariable Long id, @RequestBody Delivery delivery) {
+    return deliveryService.update(id, delivery);
   }
 
   @DeleteMapping("/{id}")
   public void delete(@PathVariable Long id) {
-    droneService.delete(id);
+    deliveryService.delete(id);
   }
 }
