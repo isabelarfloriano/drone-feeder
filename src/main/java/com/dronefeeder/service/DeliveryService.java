@@ -1,6 +1,5 @@
 package com.dronefeeder.service;
 
-import com.dronefeeder.dto.DeliveryDto;
 import com.dronefeeder.exception.NotFoundException;
 import com.dronefeeder.model.Delivery;
 import com.dronefeeder.model.DroneFeeder;
@@ -34,13 +33,18 @@ public class DeliveryService {
   /**
    * Create method.
    */
-  public Delivery create(DeliveryDto delivery) {
-    DroneFeeder dronefeeder = droneRepository.findById(delivery.getDronefeederId())
-        .orElseThrow(() -> new NotFoundException("Drone Not Found!!"));
-    Delivery deliveryCreated = new Delivery(
-        delivery.getLatitude(), delivery.getLongitude(), dronefeeder,
-        delivery.getDeliveryDateAndTime(), delivery.getOrderDateAndTime());
-    return deliveryRepository.save(deliveryCreated);
+  public Delivery create(Delivery delivery) {
+    droneRepository.findById(delivery.getDronefeeder().getId())
+        .orElseThrow(() ->
+            new NotFoundException("The delivery must be associated to an existing drone"));
+
+    DroneFeeder drone = delivery.getDronefeeder();
+
+    drone.addDelivery(delivery);
+    
+    deliveryRepository.save(delivery);
+
+    return drone.getDeliveries().get(drone.getDeliveries().size() - 1);
   }
   
   /**
@@ -55,7 +59,7 @@ public class DeliveryService {
   /**
    * Update method.
    */
-  public Delivery update(Long id, DeliveryDto delivery) {
+  public Delivery update(Long id, Delivery delivery) {
 
     try {
       Delivery updatedDelivery = deliveryRepository.findById(id).get();
@@ -67,10 +71,8 @@ public class DeliveryService {
         updatedDelivery.setLongitude(delivery.getLongitude());
       }
 
-      if (delivery.getDronefeederId() != null) {
-        DroneFeeder dronefeeder = droneRepository.findById(delivery.getDronefeederId())
-            .orElseThrow(() -> new NotFoundException("Drone Not Found!!"));
-        updatedDelivery.setDronefeeder(dronefeeder);
+      if (delivery.getDronefeeder() != null) {
+        updatedDelivery.setDronefeeder(delivery.getDronefeeder());
       }
 
       if (delivery.getDeliveryDateAndTime() != null) {
@@ -80,6 +82,10 @@ public class DeliveryService {
       if (delivery.getOrderDateAndTime() != null) {
         updatedDelivery.setOderDateAndTime(delivery.getOrderDateAndTime());
       }
+      
+      if (delivery.getDeliveryStatus() != null) {
+        updatedDelivery.setDeliveryStatus(delivery.getDeliveryStatus());
+      }
 
       deliveryRepository.save(updatedDelivery);
 
@@ -88,22 +94,5 @@ public class DeliveryService {
       throw new NotFoundException("Matching object not found");
     } 
   }
-  
-  /**
-   * UpdateStatus method.
-   */
-  public Delivery updateStatus(Long id, String deliveryStatus) {
-    
-    try {
-      Delivery updatedDelivery = deliveryRepository.findById(id).get();
-      updatedDelivery.setDeliveryStatus(deliveryStatus);
 
-      deliveryRepository.save(updatedDelivery);
-
-      return updatedDelivery;
-
-    } catch (Exception error) {
-      throw new NotFoundException("Matching object not found");
-    } 
-  }
 }

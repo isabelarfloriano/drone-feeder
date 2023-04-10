@@ -1,6 +1,5 @@
 package com.dronefeeder.controller;
 
-import com.dronefeeder.dto.DeliveryDto;
 import com.dronefeeder.model.Delivery;
 import com.dronefeeder.service.DeliveryService;
 import java.util.List;
@@ -35,19 +34,18 @@ public class DeliveryController {
   }
 
   @PostMapping
-  public Delivery create(@RequestBody DeliveryDto delivery) {
+  public Delivery create(@RequestBody Delivery delivery) {
     return deliveryService.create(delivery);
   }
 
   @PutMapping("/{id}")
-  public Delivery update(@RequestBody DeliveryDto delivery, @PathVariable Long id) {
+  public Delivery update(@RequestBody Delivery delivery, @PathVariable Long id) {
     return deliveryService.update(id, delivery);
   }
   
-  @PutMapping("/{id}/start")
-  public Delivery updateStatus(@PathVariable Long id) {
-    final var newStatus = "Em trânsito";
-    return deliveryService.updateStatus(id, newStatus);
+  @PutMapping("/{id}/deliveryFinished")
+  public Delivery updateStatus(@PathVariable Long id, @RequestBody Delivery delivery) {
+    return deliveryService.update(id, delivery);
   }
 
   @DeleteMapping("/{id}")

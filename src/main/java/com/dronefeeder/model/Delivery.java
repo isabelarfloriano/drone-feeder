@@ -1,6 +1,7 @@
 package com.dronefeeder.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,14 +24,14 @@ public class Delivery {
   
   private String longitude;
 
-  private String deliveryStatus;
-
   private String orderDateAndTime;
 
   private String deliveryDateAndTime;
   
-  @ManyToOne
-  @JoinColumn(name = "dronefeeder_id")
+  private String deliveryStatus;
+  
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "dronefeeder")
   private DroneFeeder dronefeeder;
   
   //    @OneToOne
@@ -40,29 +41,21 @@ public class Delivery {
   /**
    * Delivery constructor.
    */
-  public Delivery() {
-    this.orderDateAndTime = null;
-    this.deliveryStatus = "pendente";
-    this.deliveryDateAndTime = null;
-  }
-  
-  public Delivery(String latitude, String longitude) {
-    this.latitude = latitude;
-    this.longitude = longitude;
-  }
+  public Delivery() {}
   
   /**
    * Delivery constructor.
    */
   public Delivery(
       String latitude, String longitude, DroneFeeder dronefeeder,
-      String orderDateAndTime, String deliveryDateAndTime) {
+      String orderDateAndTime, String deliveryDateAndTime, String deliveryStatus) {
     this.latitude = latitude;
     this.longitude = longitude;
     this.dronefeeder = dronefeeder;
     this.orderDateAndTime = orderDateAndTime;
-    this.deliveryStatus = "pendente";
     this.deliveryDateAndTime = deliveryDateAndTime;
+    this.deliveryStatus = deliveryStatus;
+    
   }
 
   public Long getId() {
