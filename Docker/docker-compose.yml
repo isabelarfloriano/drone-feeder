@@ -1,13 +1,23 @@
 version: '3'
 services:
   drone-feeder:
-    image: drone-feeder/api
     build:
       context: ./
       dockerfile: Dockerfile
     restart: always
+    env_file: ./.env
     ports:
-      - 8000-8999:8080
+      - $APP_LOCAL_PORT:$APP_DOCKER_PORT
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://db:$DB_DOCKER_PORT/dronefeeder?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false",
+        "spring.datasource.username" : "$DB_USER",
+        "spring.datasource.password" : "$DB_ROOT_PASSWORD",
+        "spring.datasource.driver-class-name": "com.mysql.cj.jdbc.Driver",
+        "spring.jpa.database-platform" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.generate-ddl": "true",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
     depends_on:
       - db
   db:
