@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.dronefeeder.model.Delivery;
 import com.dronefeeder.model.DroneFeeder;
+import com.dronefeeder.repository.DeliveryRepository;
 import com.dronefeeder.repository.DroneRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Random;
@@ -37,9 +39,13 @@ public class DroneFeederApplicationTests {
   @SpyBean
   private DroneRepository droneRepository;
 
+  @SpyBean
+  private DeliveryRepository deliveryRepository;
+
   @BeforeEach
   public void setUp() {
     droneRepository.deleteAll();
+    deliveryRepository.deleteAll();
   }
 
   @Test
@@ -188,5 +194,34 @@ public class DroneFeederApplicationTests {
     result
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.error").value("Matching object not found"));
+  }
+
+  @Test
+  @Order(10)
+  @DisplayName("10 - GET/ Must return all deliveries that were related to the specified drone.")
+  void mustReturnListWithAllDeliveries() throws Exception {
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+
+    droneRepository.save(drone);
+
+    final var deliveryOne = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+
+    deliveryRepository.save(deliveryOne);
+
+    final var deliveryTwo = new Delivery("-27.593501", "-48.558541", "2023-03-13 09:37:23", "2023-04-13 11:20:00", "In Transit", drone);
+    
+     deliveryRepository.save(deliveryTwo);
+    
+     final var result =
+         mockMvc.perform(get("/dronefeeder/drone/" + drone.getId() + "/deliveries").contentType(MediaType.APPLICATION_JSON)); 
+
+    result
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].latitude").value(deliveryOne.getLatitude()))
+        .andExpect(jsonPath("$[0].orderDateAndTime").value(deliveryOne.getOrderDateAndTime()))
+        .andExpect(jsonPath("$[0].deliveryStatus").value(deliveryOne.getDeliveryStatus()))
+        .andExpect(jsonPath("$[1].id").value(deliveryTwo.getId()))
+        .andExpect(jsonPath("$[1].longitude").value(deliveryTwo.getLongitude()))
+        .andExpect(jsonPath("$[1].deliveryDateAndTime").value(deliveryTwo.getDeliveryDateAndTime()));
   }
 }
