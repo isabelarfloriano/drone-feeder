@@ -224,4 +224,16 @@ public class DroneFeederApplicationTests {
         .andExpect(jsonPath("$[1].longitude").value(deliveryTwo.getLongitude()))
         .andExpect(jsonPath("$[1].deliveryDateAndTime").value(deliveryTwo.getDeliveryDateAndTime()));
   }
+
+  @Test
+  @Order(11)
+  @DisplayName("11 - GET/ Must throw error if the drone was not found by Id, when trying to get the deliveries.")
+  void mustThrowErrorNotFoundById() throws Exception {
+    final var result = mockMvc
+        .perform(get("/dronefeeder/drone/" + new Random().nextInt() + "/deliveries"));
+
+    result
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error").value("Matching object not found"));
+  }
 }
