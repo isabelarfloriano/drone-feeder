@@ -146,8 +146,8 @@ public class DeliveryTests {
   
     @Test
     @Order(6)
-    @DisplayName("6 - DELETE/ Must delete the drone registered by ID.")
-    void mustDeleteTheDroneById() throws Exception {
+    @DisplayName("6 - DELETE/ Must delete the delivery registered by ID.")
+    void mustDeleteTheDeliveryById() throws Exception {
       final var drone = new DroneFeeder("Heygelo", "S90", "123456");
       droneRepository.save(drone);
   
