@@ -42,11 +42,6 @@ public class DeliveryController {
   public Delivery update(@RequestBody Delivery delivery, @PathVariable Long id) {
     return deliveryService.update(id, delivery);
   }
-  
-  @PutMapping("/{id}/deliveryFinished")
-  public Delivery updateStatus(@PathVariable Long id, @RequestBody Delivery delivery) {
-    return deliveryService.update(id, delivery);
-  }
 
   @DeleteMapping("/{id}")
   public void delete(@PathVariable Long id) {
