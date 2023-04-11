@@ -63,6 +63,18 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.basedir}/Docker</outputDirectory>
+							<finalName>dronefeeder</finalName>
+							<mainClass>com.dronefeeder.DroneFeederApplication</mainClass>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
