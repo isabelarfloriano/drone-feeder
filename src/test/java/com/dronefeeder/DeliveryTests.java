@@ -144,4 +144,19 @@ public class DeliveryTests {
           .andExpect(jsonPath("$.error").value("The delivery must be associated to an existing drone"));
     }
   
+    @Test
+    @Order(6)
+    @DisplayName("6 - DELETE/ Must delete the drone registered by ID.")
+    void mustDeleteTheDroneById() throws Exception {
+      final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+      droneRepository.save(drone);
+  
+      final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+      deliveryRepository.save(delivery);
+
+      final var result = mockMvc.perform(delete("/dronefeeder/delivery/" + delivery.getId()));
+  
+      result.andExpect(status().isOk());
+    }
+  
 }
