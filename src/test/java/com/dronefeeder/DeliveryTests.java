@@ -92,4 +92,16 @@ public class DeliveryTests {
         .andExpect(jsonPath("$.deliveryStatus").value(delivery.getDeliveryStatus()));
   }
 
+  @Test
+  @Order(3)
+  @DisplayName("3 - GET/ Must throw error if the delivery was not found by Id.")
+  void mustThrowErrorIfDeliveryNotFoundbyId() throws Exception {
+    final var result = mockMvc
+        .perform(get("/dronefeeder/delivery/" + new Random().nextInt()));
+
+    result
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error").value("Matching object not found"));
+  }
+
 }
