@@ -34,8 +34,10 @@ public class DroneFeeder {
       fetch = FetchType.LAZY)
   private List<Delivery> deliveries = new ArrayList<Delivery>();
 
-  //@OneToMany(mappedBy = "dronefeeder", cascade = CascadeType.ALL, orphanRemoval = true)
-  //private List<Videos> videos;
+  @JsonIgnore
+  @OneToMany(mappedBy = "dronefeeder", cascade = CascadeType.ALL, orphanRemoval = true,
+      fetch = FetchType.LAZY)
+  private List<Video> videos = new ArrayList<Video>();
 
   public DroneFeeder() {}
   
@@ -87,6 +89,13 @@ public class DroneFeeder {
   public void addDelivery(Delivery delivery) {
     this.deliveries.add(delivery);
   }
+  
+  public List<Video> getVideos() {
+    return videos;
+  }
 
+  public void addVideo(Video video) {
+    this.videos.add(video);
+  }
 
 }
