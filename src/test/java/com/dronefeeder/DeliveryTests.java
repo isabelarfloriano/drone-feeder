@@ -159,4 +159,16 @@ public class DeliveryTests {
       result.andExpect(status().isOk());
     }
   
+    @Test
+    @Order(7)
+    @DisplayName("7 - DELETE/ Must throw error if the delivery was not found.")
+    void mustThrowErrorIfDeliveryNotFound() throws Exception {
+      final var result = mockMvc
+          .perform(delete("/dronefeeder/delivery/" + new Random().nextInt()));
+  
+      result
+          .andExpect(status().isNotFound())
+          .andExpect(jsonPath("$.error").value("Matching object not found"));
+    }
+    
 }
