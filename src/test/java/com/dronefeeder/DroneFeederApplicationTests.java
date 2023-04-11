@@ -84,7 +84,19 @@ public class DroneFeederApplicationTests {
 
   @Test
   @Order(3)
-  @DisplayName("3 - POST/ Must add a new drone.")
+  @DisplayName("3 - GET/ Must throw error if the drone was not found by Id.")
+  void mustThrowErrorIfDroneNotFoundbyId() throws Exception {
+    final var result = mockMvc
+        .perform(get("/dronefeeder/drone/" + new Random().nextInt()));
+
+    result
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error").value("Matching object not found"));
+  }
+
+  @Test
+  @Order(4)
+  @DisplayName("4 - POST/ Must add a new drone.")
   void mustAddNewDrone() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
 
@@ -100,8 +112,8 @@ public class DroneFeederApplicationTests {
   }
 
   @Test
-  @Order(4)
-  @DisplayName("4 - POST/ Must throw error if the drone is already registered.")
+  @Order(5)
+  @DisplayName("5 - POST/ Must throw error if the drone is already registered.")
   void mustThrowErrorIfDroneAlreadyExists() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
@@ -117,8 +129,8 @@ public class DroneFeederApplicationTests {
   }
 
   @Test
-  @Order(5)
-  @DisplayName("5 - DELETE/ Must delete the drone registered by ID.")
+  @Order(6)
+  @DisplayName("6 - DELETE/ Must delete the drone registered by ID.")
   void mustDeleteTheDroneById() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
@@ -129,8 +141,8 @@ public class DroneFeederApplicationTests {
   }
 
   @Test
-  @Order(6)
-  @DisplayName("6 - DELETE/ Must throw error if the drone was not found.")
+  @Order(7)
+  @DisplayName("7 - DELETE/ Must throw error if the drone was not found.")
   void mustThrowErrorIfDroneNotFound() throws Exception {
     final var result = mockMvc
         .perform(delete("/dronefeeder/drone/" + new Random().nextInt()));
@@ -141,8 +153,8 @@ public class DroneFeederApplicationTests {
   }
   
   @Test
-  @Order(7)
-  @DisplayName("7 - PUT/ Must update the drone registered by ID.")
+  @Order(8)
+  @DisplayName("8 - PUT/ Must update the drone registered by ID.")
   void mustUpdateTheDroneById() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     final var droneUpdated = new DroneFeeder("Heygelo", "S91", "123456");
@@ -163,8 +175,8 @@ public class DroneFeederApplicationTests {
   }
   
   @Test
-  @Order(8)
-  @DisplayName("8 - PUT/ Must throw error if the drone to be updated was not found.")
+  @Order(9)
+  @DisplayName("9 - PUT/ Must throw error if the drone to be updated was not found.")
   void mustThrowErrorCaseDroneNotFound() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     
