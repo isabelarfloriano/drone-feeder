@@ -171,4 +171,28 @@ public class DeliveryTests {
           .andExpect(jsonPath("$.error").value("Matching object not found"));
     }
     
+    @Test
+    @Order(8)
+    @DisplayName("8 - PUT/ Must update the delivery registered by ID.")
+    void mustUpdateTheDeliveryById() throws Exception {
+      final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+      droneRepository.save(drone);
+      final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+      deliveryRepository.save(delivery);
+  
+      mockMvc.perform(get("/dronefeeder/delivery/" + delivery.getId()))
+          .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+          .andExpect(jsonPath("$.orderDateAndTime").value(delivery.getOrderDateAndTime()));
+    
+      final var deliveryUpdated = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-24 17:00:00", "In Transit", drone);
+    
+      final ResultActions result =
+          mockMvc.perform(put("/dronefeeder/delivery/" + delivery.getId())
+              .content(new ObjectMapper().writeValueAsString(deliveryUpdated))
+              .contentType(MediaType.APPLICATION_JSON));
+  
+      result.andExpect(status().isOk())
+          .andExpect(jsonPath("$.deliveryDateAndTime").value(deliveryUpdated.getDeliveryDateAndTime()));
+    }
+    
 }
