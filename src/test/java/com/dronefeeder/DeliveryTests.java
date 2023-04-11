@@ -76,8 +76,8 @@ public class DeliveryTests {
 
   @Test
   @Order(2)
-  @DisplayName("2 - GET/ Must return the drone registered by ID.")
-  void mustReturnTheDroneById() throws Exception {
+  @DisplayName("2 - GET/ Must return the delivery registered by ID.")
+  void mustReturnTheDeliveryById() throws Exception {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
 
