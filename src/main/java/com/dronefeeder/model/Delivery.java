@@ -38,6 +38,18 @@ public class Delivery {
   @JoinColumn(name = "video_id")
   private Video video;
 
+  public Delivery() {}
+
+  public Delivery( String latitude, String longitude, String orderDateAndTime, String deliveryDateAndTime,
+      String deliveryStatus, DroneFeeder dronefeeder) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.orderDateAndTime = orderDateAndTime;
+    this.deliveryDateAndTime = deliveryDateAndTime;
+    this.deliveryStatus = deliveryStatus;
+    this.dronefeeder = dronefeeder;
+  }
+
   public Long getId() {
     return id;
   }
