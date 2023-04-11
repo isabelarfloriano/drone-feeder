@@ -104,4 +104,26 @@ public class DeliveryTests {
         .andExpect(jsonPath("$.error").value("Matching object not found"));
   }
 
+  @Test
+  @Order(4)
+  @DisplayName("4 - POST/ Must add a new delivery.")
+  void mustAddNewDelivery() throws Exception {
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(drone);
+
+    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+
+    final var result = mockMvc
+        .perform(post("/dronefeeder/delivery")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(new ObjectMapper().writeValueAsString(delivery)));
+    
+    result    
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("$.latitude").value(delivery.getLatitude()))
+    .andExpect(jsonPath("$.orderDateAndTime").value(delivery.getOrderDateAndTime()))
+    // .andExpect(jsonPath("$.video").value(null))
+    .andExpect(jsonPath("$.deliveryStatus").value(delivery.getDeliveryStatus()));  }
+
+
 }
