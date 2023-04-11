@@ -1,12 +1,13 @@
-#  Seja bem vindo ao repositório Projeto Drone-Feeder 
+#  Projeto Drone Feeder (FutureH) 
 <div align="center">
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpL8tgwBXKIDLVDhX7HQe_shkDCnoZh-sH-g&usqp=CAU" width="300px" />
 </div>
 
 ## Descrição do Projeto :package:
 
-Projeto desenvolvido para monitorar entregas realizadas por drones.
-Neste projeto foi construido o back-end com Java utilizando Spring-boot, para coletar informações como os dados do drone, entregas realizadas e vídeos feitos durante as entregas e adiciona-las no banco de dados MySQL.
+A empresa FutureH registrou uma nova patente que permitirá a entrega de pacotes com drones. O projeto Drone Feeder é o serviço Back-end, que irá fornecer informações aos drones, monitorando as entregas realizadas.
+
+O Drone Feeder foi desenvolvido com Java utilizando Spring-boot, para coletar informações como os dados do drone, entregas realizadas e vídeos feitos durante as entregas e adicioná-las em um banco de dados MySQL.
 
 ## :computer: Tecnologias utilizadas 
 
@@ -26,24 +27,58 @@ Neste projeto foi construido o back-end com Java utilizando Spring-boot, para co
 - `Java 11.0.18`
 - `docker version 23.0.2`
 - `docker-compose version 2.4.1`
+- `MySQL version 5.7`
 
 
 ## Instalação do projeto localmente :computer:
 
 - Clone o repositório
- `git@github.com:isabelarfloriano/drone-feeder.git`
+ `git@github.com:isabelarfloriano/drone-feeder.git`.
  - Vá para a pasta do projeto
- `cd drone-feeder`
+ `cd drone-feeder`.
  - Instale as dependências
- `mvn install` 
+ `mvn install`.
+ - Configure o arquivo application.yml, localizado no caminho (src/main/resources), alterando os campos username e password com as suas informações locais do MySQL.
 
 ## :pushpin: Para executar o Docker
 -   Verifique se as portas 3306 e 8080 estão disponíveis.
--   Realize o 'git pull' na branch 'docker-plus-mysql'. Link do repositório do  [projeto](https://github.com/isabelarfloriano/drone-feeder/tree/docker-plus-mysql).
--   Renomeie o arquivo '.env.example' para '.env' que se encontra no arquivo Docker.
--   Abra um terminal na pasta Docker e execute o comando 'docker-compose up -d'.
--   Abra outro terminal no mesmo endereço e execute o comando 'docker exec -it docker-db-1 mysql -u root -p', inserindo a senha 'password' quando solicitado. Deve ser exibido normalmente o terminal interativo do MySQL no container.
--   Abra outro terminal no mesmo endereço e execute o comando 'docker compose logs -f drone-feeder'. Deve ser exibido no terminal o build da aplicação, assim como quando usamos o comando 'mvn spring-boot:run'.
+-   Renomeie o arquivo '.env.example' para '.env' que se encontra na pasta Docker.
+-   Abra um terminal na pasta Docker e execute o comando `docker-compose up -d`.
+-   Abra outro terminal no mesmo endereço e execute o comando `docker exec -it docker-db-1 mysql -u root -p`, inserindo a senha 'password' quando solicitado. Deve ser exibido normalmente o terminal interativo do MySQL no container.
+-   Abra outro terminal no mesmo endereço e execute o comando `docker compose logs -f drone-feeder`. Deve ser exibido no terminal o build da aplicação, assim como quando usamos o comando `mvn spring-boot:run`.
+
+## :pushpin: Para testar o projeto
+-   Rode o comando
+`mvn test`
+
+## :triangular_flag_on_post: Endpoints
+#### :flying_saucer: Drones
+```
+GET /dronefeeder/drone: lista todos os drones cadastrados
+GET /dronefeeder/drone/{id}: busca um drone pelo seu ID
+GET /dronefeeder/drone/{id}/deliveries: busca todas as entregas do drone pelo seu ID
+GET /dronefeeder/drone/{id}/videos: busca todos os videos do drone pelo seu ID
+POST /dronefeeder/drone: cria um novo drone
+PUT /dronefeeder/drone/{id}: atualiza um drone existente pelo ID
+DELETE /dronefeeder/drone/{id}: exclui um drone existente pelo ID 
+```
+
+#### :package: Entregas
+```
+GET /dronefeeder/delivery: lista todas as entregas cadastradas
+GET /dronefeeder/delivery/{id}: busca uma entrega pelo seu ID
+POST /dronefeeder/delivery: cria uma nova entrega associada a um drone
+PUT /dronefeeder/delivery/{id}: atualiza uma entrega existente pelo seu ID
+DELETE /dronefeeder/delivery/{id}: exclui uma entrega existente pelo seu ID
+```
+#### :package: Vídeos
+```
+GET /dronefeeder/video: lista todos os vídeos cadastrados
+GET /dronefeeder/video/{id}: busca um video pelo seu ID
+POST /dronefeeder/video: cria um novo vídeo associado a um drone
+PUT /dronefeeder/video/{id}: atualiza um vídeo existente pelo seu ID
+DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
+```
 
 ## :large_orange_diamond: Para realizar testes de requisição no Insomnia, Postman, etc...
 Utilize o objeto abaixo como modelo na rota 'localhost:8080/dronefeeder/drone':  
