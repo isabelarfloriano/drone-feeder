@@ -14,6 +14,8 @@ import com.dronefeeder.repository.DeliveryRepository;
 import com.dronefeeder.repository.DroneRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Random;
+
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.cache.support.NullValue;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -122,7 +125,7 @@ public class DeliveryTests {
     .andExpect(status().isOk())
     .andExpect(jsonPath("$.latitude").value(delivery.getLatitude()))
     .andExpect(jsonPath("$.orderDateAndTime").value(delivery.getOrderDateAndTime()))
-    // .andExpect(jsonPath("$.video").value(null))
+    .andExpect(jsonPath("$.video").value(IsNull.nullValue()))
     .andExpect(jsonPath("$.deliveryStatus").value(delivery.getDeliveryStatus()));  }
 
     @Test
