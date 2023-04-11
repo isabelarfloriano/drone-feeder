@@ -2,10 +2,10 @@ package com.dronefeeder.service;
 
 import com.dronefeeder.exception.AlreadyExistsException;
 import com.dronefeeder.exception.NotFoundException;
+import com.dronefeeder.model.Delivery;
 import com.dronefeeder.model.DroneFeeder;
 import com.dronefeeder.repository.DroneRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +22,17 @@ public class DroneService {
     return droneRepository.findAll();
   }
   
-  public Optional<DroneFeeder> findById(Long id) {
-    return droneRepository.findById(id);
+  public DroneFeeder findById(Long id) {
+    return droneRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Matching object not found"));
   }
   
   /**
    * create method.
    */
   public DroneFeeder create(DroneFeeder drone) {
-    final var serialNumber = drone.getSerialNumber();
-
-    List<DroneFeeder> allDrones = droneRepository.findAll();
-
-    for (int i = 0; i < allDrones.size(); i += 1) {
-      if (allDrones.get(i).getSerialNumber() == serialNumber) {
-        throw new AlreadyExistsException("Drone is already registered!");
-      }
+    if (droneRepository.existsBySerialNumber(drone.getSerialNumber())) {
+      throw new AlreadyExistsException("Drone is already registered!");
     }
     
     return droneRepository.save(drone);
@@ -78,5 +73,15 @@ public class DroneService {
     } catch (Exception error) {
       throw new NotFoundException("Matching object not found");
     }
+  }
+  
+  /**
+   * getDeliveries method.
+   */
+  public List<Delivery> getDeliveries(Long id) {
+    DroneFeeder drone = droneRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Matching object not found"));
+
+    return drone.getDeliveries();
   }
 }
