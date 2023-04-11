@@ -56,6 +56,14 @@ public class Video {
     this.url = url;
   }
   
+  public DroneFeeder getDronefeeder() {
+    return dronefeeder;
+  }
+
+  public void setDronefeeder(DroneFeeder dronefeeder) {
+    this.dronefeeder = dronefeeder;
+  }
+  
   public Delivery getDelivery() {
     return delivery;
   }
