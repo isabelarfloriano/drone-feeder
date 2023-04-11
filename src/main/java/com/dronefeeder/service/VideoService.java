@@ -47,10 +47,6 @@ public class VideoService {
          .orElseThrow(() ->
              new NotFoundException("The video must be associated to an existing drone"));
     
-    deliveryRepository.findById(video.getDelivery().getId())
-        .orElseThrow(() ->
-            new NotFoundException("The video must be associated to an existing delivery"));
-    
     videoRepository.save(video);
  
     return video;
