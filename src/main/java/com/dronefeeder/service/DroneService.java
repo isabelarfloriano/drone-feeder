@@ -18,10 +18,16 @@ public class DroneService {
   @Autowired
   DroneRepository droneRepository;
   
+  /**
+   * findAll method.
+   */
   public List<DroneFeeder> findAll() {
     return droneRepository.findAll();
   }
   
+  /**
+   * findById method.
+   */
   public DroneFeeder findById(Long id) {
     return droneRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Matching object not found"));
