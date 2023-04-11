@@ -87,6 +87,10 @@ public class DeliveryService {
       if (delivery.getDeliveryStatus() != null) {
         updatedDelivery.setDeliveryStatus(delivery.getDeliveryStatus());
       }
+      
+      if (delivery.getVideo() != null) {
+        updatedDelivery.setVideo(delivery.getVideo());
+      }
 
       deliveryRepository.save(updatedDelivery);
 
