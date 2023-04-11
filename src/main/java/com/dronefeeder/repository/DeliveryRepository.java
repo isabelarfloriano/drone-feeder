@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 /**
- * DeliveryRepository.
+ * DeliveryRepository interface.
  */
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {}
