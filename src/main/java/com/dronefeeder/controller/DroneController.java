@@ -2,6 +2,7 @@ package com.dronefeeder.controller;
 
 import com.dronefeeder.model.Delivery;
 import com.dronefeeder.model.DroneFeeder;
+import com.dronefeeder.model.Video;
 import com.dronefeeder.service.DroneService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class DroneController {
   @GetMapping("/{id}/deliveries")
   public List<Delivery> getDeliveries(@PathVariable Long id) {
     return droneService.getDeliveries(id);
+  }
+  
+  @GetMapping("/{id}/videos")
+  public List<Video> getVideos(@PathVariable Long id) {
+    return droneService.getVideos(id);
   }
   
   @PostMapping
