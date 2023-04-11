@@ -125,5 +125,23 @@ public class DeliveryTests {
     // .andExpect(jsonPath("$.video").value(null))
     .andExpect(jsonPath("$.deliveryStatus").value(delivery.getDeliveryStatus()));  }
 
+    @Test
+    @Order(5)
+    @DisplayName("5 - POST/ Must throw error if the drone selected for delivery was not found.")
+    void mustThrowErrorIfDroneAlreadyExists() throws Exception {
+      final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+      drone.setId((long) 99);
 
+      final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+  
+      final var result = mockMvc
+          .perform(post("/dronefeeder/delivery")
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(new ObjectMapper().writeValueAsString(delivery)));
+  
+      result      
+          .andExpect(status().isNotFound())
+          .andExpect(jsonPath("$.error").value("The delivery must be associated to an existing drone"));
+    }
+  
 }
