@@ -195,4 +195,21 @@ public class DeliveryTests {
           .andExpect(jsonPath("$.deliveryDateAndTime").value(deliveryUpdated.getDeliveryDateAndTime()));
     }
     
+    @Test
+    @Order(9)
+    @DisplayName("9 - PUT/ Must throw error if the delivery to be updated was not found.")
+    void mustThrowErrorCaseDeliveryNotFound() throws Exception {
+      final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+      droneRepository.save(drone);
+      final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+  
+      final var result = mockMvc
+        .perform(get("/dronefeeder/delivery/" + new Random().nextInt())
+            .content(new ObjectMapper().writeValueAsString(delivery))
+            .contentType(MediaType.APPLICATION_JSON));
+
+      result
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error").value("Matching object not found"));
+    }
 }
