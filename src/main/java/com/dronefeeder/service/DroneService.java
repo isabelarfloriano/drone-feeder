@@ -4,6 +4,7 @@ import com.dronefeeder.exception.AlreadyExistsException;
 import com.dronefeeder.exception.NotFoundException;
 import com.dronefeeder.model.Delivery;
 import com.dronefeeder.model.DroneFeeder;
+import com.dronefeeder.model.Video;
 import com.dronefeeder.repository.DroneRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,5 +90,15 @@ public class DroneService {
         .orElseThrow(() -> new NotFoundException("Matching object not found"));
 
     return drone.getDeliveries();
+  }
+  
+  /**
+   * getVideos method.
+   */
+  public List<Video> getVideos(Long id) {
+    DroneFeeder drone = droneRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Matching object not found"));
+
+    return drone.getVideos();
   }
 }
