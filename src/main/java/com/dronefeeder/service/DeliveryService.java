@@ -20,10 +20,16 @@ public class DeliveryService {
   @Autowired
   DroneRepository droneRepository;
 
+  /**
+   * findAll method.
+   */
   public List<Delivery> findAll() {
     return deliveryRepository.findAll();  
   }
   
+  /**
+   * findById method.
+   */
   public Delivery findById(Long id) {
     return deliveryRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Matching object not found"));
@@ -80,6 +86,10 @@ public class DeliveryService {
       
       if (delivery.getDeliveryStatus() != null) {
         updatedDelivery.setDeliveryStatus(delivery.getDeliveryStatus());
+      }
+      
+      if (delivery.getVideo() != null) {
+        updatedDelivery.setVideo(delivery.getVideo());
       }
 
       deliveryRepository.save(updatedDelivery);

@@ -7,8 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-//import javax.persistence.OneToOne;
 
 /**
  * Delivery class.
@@ -34,9 +34,9 @@ public class Delivery {
   @JoinColumn(name = "dronefeeder_id")
   private DroneFeeder dronefeeder;
   
-  //    @OneToOne
-  //    @JoinColumn(name = "video_id")
-  //    private Video video;
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "video_id")
+  private Video video;
 
   public Long getId() {
     return id;
@@ -94,11 +94,11 @@ public class Delivery {
     this.dronefeeder = dronefeeder;
   }
 
-  //  public Video getVideo() {
-  //    return video;
-  //  }
-  //
-  //  public void setVideo(Video video) {
-  //    this.video = video;
-  //  }
+  public Video getVideo() {
+    return video;
+  }
+
+  public void setVideo(Video video) {
+    this.video = video;
+  }
 }

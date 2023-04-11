@@ -1,7 +1,8 @@
 package com.dronefeeder.controller;
 
-import com.dronefeeder.model.Delivery;
-import com.dronefeeder.service.DeliveryService;
+
+import com.dronefeeder.model.Video;
+import com.dronefeeder.service.VideoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,37 +15,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * DeliveryController class.
+ * VideoController class.
  */
 @RestController
-@RequestMapping("/dronefeeder/delivery")
-public class DeliveryController {
+@RequestMapping("/dronefeeder/video")
+public class VideoController {
 
   @Autowired
-  DeliveryService deliveryService;
+  VideoService videoService;
 
   @GetMapping
-  public List<Delivery> findAll() {
-    return deliveryService.findAll();
+  public List<Video> findAll() {
+    return videoService.findAll();
   }
 
   @GetMapping("/{id}")
-  public Delivery findById(@PathVariable Long id) {
-    return deliveryService.findById(id);
+  public Video findById(@PathVariable Long id) {
+    return videoService.findById(id);
   }
 
   @PostMapping
-  public Delivery create(@RequestBody Delivery delivery) {
-    return deliveryService.create(delivery);
+  public Video create(@RequestBody Video video) {
+    return videoService.create(video);
   }
 
   @PutMapping("/{id}")
-  public Delivery update(@RequestBody Delivery delivery, @PathVariable Long id) {
-    return deliveryService.update(id, delivery);
+  public Video update(@RequestBody Video video, @PathVariable Long id) {
+    return videoService.update(id, video);
   }
 
   @DeleteMapping("/{id}")
   public void delete(@PathVariable Long id) {
-    deliveryService.delete(id);
+    videoService.delete(id);
   }
 }
