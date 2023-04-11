@@ -20,10 +20,16 @@ public class DeliveryService {
   @Autowired
   DroneRepository droneRepository;
 
+  /**
+   * findAll method.
+   */
   public List<Delivery> findAll() {
     return deliveryRepository.findAll();  
   }
   
+  /**
+   * findById method.
+   */
   public Delivery findById(Long id) {
     return deliveryRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Matching object not found"));
