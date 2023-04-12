@@ -81,7 +81,7 @@ public class DeliveryService {
       }
 
       if (delivery.getOrderDateAndTime() != null) {
-        updatedDelivery.setOderDateAndTime(delivery.getOrderDateAndTime());
+        updatedDelivery.setOrderDateAndTime(delivery.getOrderDateAndTime());
       }
       
       if (delivery.getDeliveryStatus() != null) {
