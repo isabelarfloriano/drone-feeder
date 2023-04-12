@@ -14,7 +14,6 @@ import com.dronefeeder.repository.DeliveryRepository;
 import com.dronefeeder.repository.DroneRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Random;
-
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,8 +56,10 @@ public class DeliveryTests {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
 
-    final var deliveryOne = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);    
-    final var deliveryTwo = new Delivery("-27.593501", "-48.558541", "2023-03-13 09:37:23", "2023-04-13 11:20:00", "In Transit", drone);
+    final var deliveryOne = new Delivery("-27.593500", "-48.558540",
+        "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);    
+    final var deliveryTwo = new Delivery("-27.593501", "-48.558541", "2023-03-13 09:37:23",
+        "2023-04-13 11:20:00", "In Transit", drone);
     
     deliveryRepository.save(deliveryOne);
     deliveryRepository.save(deliveryTwo);
@@ -73,7 +74,8 @@ public class DeliveryTests {
         .andExpect(jsonPath("$[0].deliveryStatus").value(deliveryOne.getDeliveryStatus()))
         .andExpect(jsonPath("$[1].id").value(deliveryTwo.getId()))
         .andExpect(jsonPath("$[1].longitude").value(deliveryTwo.getLongitude()))
-        .andExpect(jsonPath("$[1].deliveryDateAndTime").value(deliveryTwo.getDeliveryDateAndTime()));
+        .andExpect(jsonPath("$[1].deliveryDateAndTime")
+            .value(deliveryTwo.getDeliveryDateAndTime()));
   }
 
   @Test
@@ -83,7 +85,8 @@ public class DeliveryTests {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
 
-    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38",
+        "2023-04-13 11:00:00", "In Transit", drone);
     deliveryRepository.save(delivery);
 
     final ResultActions result = mockMvc.perform(get("/dronefeeder/delivery/" + delivery.getId()));
@@ -113,7 +116,8 @@ public class DeliveryTests {
     final var drone = new DroneFeeder("Heygelo", "S90", "123456");
     droneRepository.save(drone);
 
-    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38",
+        "2023-04-13 11:00:00", "In Transit", drone);
 
     final var result = mockMvc
         .perform(post("/dronefeeder/delivery")
@@ -121,97 +125,106 @@ public class DeliveryTests {
             .content(new ObjectMapper().writeValueAsString(delivery)));
     
     result    
-    .andExpect(status().isOk())
-    .andExpect(jsonPath("$.latitude").value(delivery.getLatitude()))
-    .andExpect(jsonPath("$.orderDateAndTime").value(delivery.getOrderDateAndTime()))
-    .andExpect(jsonPath("$.video").value(IsNull.nullValue()))
-    .andExpect(jsonPath("$.deliveryStatus").value(delivery.getDeliveryStatus()));  }
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.latitude").value(delivery.getLatitude()))
+        .andExpect(jsonPath("$.orderDateAndTime").value(delivery.getOrderDateAndTime()))
+        .andExpect(jsonPath("$.video").value(IsNull.nullValue()))
+        .andExpect(jsonPath("$.deliveryStatus").value(delivery.getDeliveryStatus()));
+  }
 
-    @Test
-    @Order(5)
-    @DisplayName("5 - POST/ Must throw error if the drone selected for delivery was not found.")
-    void mustThrowErrorIfDroneAlreadyExists() throws Exception {
-      final var drone = new DroneFeeder("Heygelo", "S90", "123456");
-      drone.setId((long) 99);
+  @Test
+  @Order(5)
+  @DisplayName("5 - POST/ Must throw error if the drone selected for delivery was not found.")
+  void mustThrowErrorIfDroneAlreadyExists() throws Exception {
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    drone.setId((long) 99);
 
-      final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
-  
-      final var result = mockMvc
-          .perform(post("/dronefeeder/delivery")
-              .contentType(MediaType.APPLICATION_JSON)
-              .content(new ObjectMapper().writeValueAsString(delivery)));
-  
-      result      
-          .andExpect(status().isNotFound())
-          .andExpect(jsonPath("$.error").value("The delivery must be associated to an existing drone"));
-    }
-  
-    @Test
-    @Order(6)
-    @DisplayName("6 - DELETE/ Must delete the delivery registered by ID.")
-    void mustDeleteTheDeliveryById() throws Exception {
-      final var drone = new DroneFeeder("Heygelo", "S90", "123456");
-      droneRepository.save(drone);
-  
-      final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
-      deliveryRepository.save(delivery);
+    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38",
+        "2023-04-13 11:00:00", "In Transit", drone);
 
-      final var result = mockMvc.perform(delete("/dronefeeder/delivery/" + delivery.getId()));
-  
-      result.andExpect(status().isOk());
-    }
-  
-    @Test
-    @Order(7)
-    @DisplayName("7 - DELETE/ Must throw error if the delivery was not found.")
-    void mustThrowErrorIfDeliveryNotFound() throws Exception {
-      final var result = mockMvc
-          .perform(delete("/dronefeeder/delivery/" + new Random().nextInt()));
-  
-      result
-          .andExpect(status().isNotFound())
-          .andExpect(jsonPath("$.error").value("Matching object not found"));
-    }
-    
-    @Test
-    @Order(8)
-    @DisplayName("8 - PUT/ Must update the delivery registered by ID.")
-    void mustUpdateTheDeliveryById() throws Exception {
-      final var drone = new DroneFeeder("Heygelo", "S90", "123456");
-      droneRepository.save(drone);
-      final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
-      deliveryRepository.save(delivery);
-  
-      mockMvc.perform(get("/dronefeeder/delivery/" + delivery.getId()))
-          .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-          .andExpect(jsonPath("$.orderDateAndTime").value(delivery.getOrderDateAndTime()));
-    
-      final var deliveryUpdated = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-24 17:00:00", "In Transit", drone);
-    
-      final ResultActions result =
-          mockMvc.perform(put("/dronefeeder/delivery/" + delivery.getId())
-              .content(new ObjectMapper().writeValueAsString(deliveryUpdated))
-              .contentType(MediaType.APPLICATION_JSON));
-  
-      result.andExpect(status().isOk())
-          .andExpect(jsonPath("$.deliveryDateAndTime").value(deliveryUpdated.getDeliveryDateAndTime()));
-    }
-    
-    @Test
-    @Order(9)
-    @DisplayName("9 - PUT/ Must throw error if the delivery to be updated was not found.")
-    void mustThrowErrorCaseDeliveryNotFound() throws Exception {
-      final var drone = new DroneFeeder("Heygelo", "S90", "123456");
-      droneRepository.save(drone);
-      final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
-  
-      final var result = mockMvc
-        .perform(get("/dronefeeder/delivery/" + new Random().nextInt())
-            .content(new ObjectMapper().writeValueAsString(delivery))
-            .contentType(MediaType.APPLICATION_JSON));
+    final var result = mockMvc
+        .perform(post("/dronefeeder/delivery")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(delivery)));
 
-      result
+    result      
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error")
+        .value("The delivery must be associated to an existing drone"));
+  }
+
+  @Test
+  @Order(6)
+  @DisplayName("6 - DELETE/ Must delete the delivery registered by ID.")
+  void mustDeleteTheDeliveryById() throws Exception {
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(drone);
+
+    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38",
+        "2023-04-13 11:00:00", "In Transit", drone);
+    
+    deliveryRepository.save(delivery);
+
+    final var result = mockMvc.perform(delete("/dronefeeder/delivery/" + delivery.getId()));
+
+    result.andExpect(status().isOk());
+  }
+
+  @Test
+  @Order(7)
+  @DisplayName("7 - DELETE/ Must throw error if the delivery was not found.")
+  void mustThrowErrorIfDeliveryNotFound() throws Exception {
+    final var result = mockMvc
+        .perform(delete("/dronefeeder/delivery/" + new Random().nextInt()));
+
+    result
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.error").value("Matching object not found"));
-    }
+  }
+
+  @Test
+  @Order(8)
+  @DisplayName("8 - PUT/ Must update the delivery registered by ID.")
+  void mustUpdateTheDeliveryById() throws Exception {
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(drone);
+    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38",
+        "2023-04-13 11:00:00", "In Transit", drone);
+    deliveryRepository.save(delivery);
+
+    mockMvc.perform(get("/dronefeeder/delivery/" + delivery.getId()))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.orderDateAndTime").value(delivery.getOrderDateAndTime()));
+
+    final var deliveryUpdated = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38",
+        "2023-04-24 17:00:00", "In Transit", drone);
+
+    final ResultActions result =
+        mockMvc.perform(put("/dronefeeder/delivery/" + delivery.getId())
+          .content(new ObjectMapper().writeValueAsString(deliveryUpdated))
+          .contentType(MediaType.APPLICATION_JSON));
+
+    result.andExpect(status().isOk())
+        .andExpect(jsonPath("$.deliveryDateAndTime")
+        .value(deliveryUpdated.getDeliveryDateAndTime()));
+  }
+
+  @Test
+  @Order(9)
+  @DisplayName("9 - PUT/ Must throw error if the delivery to be updated was not found.")
+  void mustThrowErrorCaseDeliveryNotFound() throws Exception {
+    final var drone = new DroneFeeder("Heygelo", "S90", "123456");
+    droneRepository.save(drone);
+    final var delivery = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38",
+        "2023-04-13 11:00:00", "In Transit", drone);
+
+    final var result = mockMvc
+        .perform(get("/dronefeeder/delivery/" + new Random().nextInt())
+        .content(new ObjectMapper().writeValueAsString(delivery))
+        .contentType(MediaType.APPLICATION_JSON));
+
+    result
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error").value("Matching object not found"));
+  }
 }
