@@ -16,8 +16,7 @@ services:
         "spring.datasource.driver-class-name": "com.mysql.cj.jdbc.Driver",
         "spring.jpa.database-platform" : "org.hibernate.dialect.MySQL5InnoDBDialect",
         "spring.jpa.generate-ddl": "true",
-        "spring.jpa.hibernate.ddl-auto" : "update"
-      }'
+        "spring.jpa.hibernate.ddl-auto" : "update"}'
     depends_on:
       - db
   db:
