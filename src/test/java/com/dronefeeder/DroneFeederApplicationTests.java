@@ -204,16 +204,19 @@ public class DroneFeederApplicationTests {
 
     droneRepository.save(drone);
 
-    final var deliveryOne = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38", "2023-04-13 11:00:00", "In Transit", drone);
+    final var deliveryOne = new Delivery("-27.593500", "-48.558540", "2023-03-13 07:59:38",
+        "2023-04-13 11:00:00", "In Transit", drone);
 
     deliveryRepository.save(deliveryOne);
 
-    final var deliveryTwo = new Delivery("-27.593501", "-48.558541", "2023-03-13 09:37:23", "2023-04-13 11:20:00", "In Transit", drone);
+    final var deliveryTwo = new Delivery("-27.593501", "-48.558541", "2023-03-13 09:37:23",
+        "2023-04-13 11:20:00", "In Transit", drone);
     
-     deliveryRepository.save(deliveryTwo);
+    deliveryRepository.save(deliveryTwo);
     
-     final var result =
-         mockMvc.perform(get("/dronefeeder/drone/" + drone.getId() + "/deliveries").contentType(MediaType.APPLICATION_JSON)); 
+    final var result =
+        mockMvc.perform(get("/dronefeeder/drone/" + drone.getId() + "/deliveries")
+                .contentType(MediaType.APPLICATION_JSON)); 
 
     result
         .andExpect(status().isOk())
@@ -222,12 +225,13 @@ public class DroneFeederApplicationTests {
         .andExpect(jsonPath("$[0].deliveryStatus").value(deliveryOne.getDeliveryStatus()))
         .andExpect(jsonPath("$[1].id").value(deliveryTwo.getId()))
         .andExpect(jsonPath("$[1].longitude").value(deliveryTwo.getLongitude()))
-        .andExpect(jsonPath("$[1].deliveryDateAndTime").value(deliveryTwo.getDeliveryDateAndTime()));
+        .andExpect(jsonPath("$[1].deliveryDateAndTime")
+        .value(deliveryTwo.getDeliveryDateAndTime()));
   }
 
   @Test
   @Order(11)
-  @DisplayName("11 - GET/ Must throw error if the drone was not found by Id, when trying to get the deliveries.")
+  @DisplayName("11 - GET/ Must throw error if the drone was not found by Id.")
   void mustThrowErrorNotFoundById() throws Exception {
     final var result = mockMvc
         .perform(get("/dronefeeder/drone/" + new Random().nextInt() + "/deliveries"));
