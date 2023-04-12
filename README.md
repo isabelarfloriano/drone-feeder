@@ -113,20 +113,20 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
         [
             {
                 "id": 1,
-                "brand": "marca1",
-                "modelName": "modelo1"
+                "brand": "Heygelo",
+                "modelName": "S90"
                 "serialNumber": "123456"
             },
             {
                 "id": 2,
-                "brand": "marca2",
-                "modelName": "modelo2"
+                "brand": "Deerc",
+                "modelName": "D20"
                 "serialNumber": "456789"
             },
             {
                 "id": 3,
-                "brand": "marca3",
-                "modelName": "modelo3"
+                "brand": "Neheme",
+                "modelName": "NH760"
                 "serialNumber": "123789"
             }
         ]
@@ -145,8 +145,8 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
     ```json
         {
             "id": 1,
-            "brand": "marca1",
-            "modelName": "modelo1"
+            "brand": "Heygelo",
+            "modelName": "S90"
             "serialNumber": "123456"
         }
     ```
@@ -162,47 +162,48 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
   - Exemplo `response body`
     ```json
         [
-    {
-        "id": 1,
-        "latitude": "123456",
-        "longitude": "7891011",
-        "orderDateAndTime": "14/04",
-        "deliveryDateAndTime": "19/04",
-        "deliveryStatus": "Entregue",
-        "dronefeeder": {
-            "id": 1,
-            "brand": "Lucas",
-            "modelName": "th90",
-            "serialNumber": "1111"
-        },
-        "video": {
-            "id": 1,
-            "url": "wfiwefnwenfkwnlfkw",
-            "dronefeeder": {
+            {
                 "id": 1,
-                "brand": "Lucas",
-                "modelName": "th90",
-                "serialNumber": "1111"
-            }
-        }
-    },
-    {
-        "id": 2,
-        "latitude": "123456",
-        "longitude": "7891011",
-        "orderDateAndTime": "14/04",
-        "deliveryDateAndTime": "19/04",
-        "deliveryStatus": "Em trânsito",
-        "dronefeeder": {
-            "id": 1,
-            "brand": "Lucas",
-            "modelName": "th90",
-            "serialNumber": "1111"
-        },
-        "video": null
-    },
-]
-    ```
+                "latitude": "-27.593500",
+                "longitude": "-48.558540",
+                "orderDateAndTime": "2023-03-13 07:59:38",
+                "deliveryDateAndTime": "2023-04-13 11:00:00",
+                "deliveryStatus": "Delivered",
+                "dronefeeder": {
+                    "id": 1,
+                    "brand": "Heygelo",
+                    "modelName": "S90",
+                    "serialNumber": "1111"
+                },
+                "video": {
+                    "id": 1,
+                    "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                    "dronefeeder": {
+                        "id": 1,
+                        "brand": "Heygelo",
+                        "modelName": "S90",
+                        "serialNumber": "1111"
+                    }
+                }
+            },
+            {
+                "id": 2,
+                "latitude": "-27.593501",
+                "longitude": "-48.558541",
+                "orderDateAndTime": "2023-03-13 09:37:23",
+                "deliveryDateAndTime": "2023-04-13 11:20:00",
+                "deliveryStatus": "In Transit",
+                "dronefeeder": {
+                    "id": 1,
+                    "brand": "Heygelo",
+                    "modelName": "S90",
+                    "serialNumber": "1111"
+                },
+                "video": null
+            },
+         ]
+
+     ```
   <br/>
 
 ### **busca todos os videos do drone pelo seu ID** 
@@ -215,27 +216,27 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
   - Exemplo `response body`
     ```json
         [
-    {
-        "id": 1,
-        "url": "wfiwefnwenfkwnlfkw",
-        "dronefeeder": {
-            "id": 1,
-            "brand": "Lucas",
-            "modelName": "th90",
-            "serialNumber": "1111"
-        }
-    },
-    {
-        "id": 2,
-        "url": "dmfkwm",
-        "dronefeeder": {
-            "id": 1,
-            "brand": "Lucas",
-            "modelName": "th90",
-            "serialNumber": "1111"
-        }
-    }
-]
+           {
+               "id": 1,
+               "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+               "dronefeeder": {
+                   "id": 1,
+                   "brand": "Heygelo",
+                   "modelName": "S90",
+                   "serialNumber": "1111"
+               }
+           },
+           {
+               "id": 2,
+               "url": "https://www.youtube.com/watch?v=TedKIlo0c04",
+               "dronefeeder": {
+                   "id": 1,
+                   "brand": "Heygelo",
+                   "modelName": "S90",
+                   "serialNumber": "1111"
+               }
+           }
+        ]
     ```
   <br/>
 
@@ -249,8 +250,8 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
   - Exemplo `request body` 
     ``` json
         {
-            "brand": "marca1",
-            "modelName": "modelo1",
+            "brand": "Heygelo",
+            "modelName": "S90",
             "serialNumber": "123456"
         }
     ```
@@ -259,8 +260,8 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
     ```json
         {
             "id": 1,
-            "brand": "marca1",
-            "modelName": "modelo1",
+            "brand": "Heygelo",
+            "modelName": "S90",
             "serialNumber": "123456"
         }
     ```
@@ -277,8 +278,8 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
   - Exemplo `request body` 
     ``` json
         {
-            "brand": "marca1atualizada",
-            "modelName": "modelo1atualizado",
+            "brand": "Neheme",
+            "modelName": "NH760",
             "serialNumber": "123456"
         }
     ```
@@ -287,8 +288,8 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
     ```json
         {
             "id": 1,
-            "brand": "marca1atualizada",
-            "modelName": "modelo1atualizado",
+            "brand": "Neheme",
+            "modelName": "NH760",
             "serialNumber": "123456"
         }
     ```
@@ -314,52 +315,47 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
 
   - Exemplo `response body`
     ```json
-            [
-                {
-                    "id": 2,
-                    "latitude": "15.7975° S",
-                    "longitude": "47.8919° W",
-                    "dateAndTime": "2022-08-04T18:09:16.946+00:00",
-                    "deliveryStatus": true,
-                    "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
-                    "drone": {
-                        "id": 22,
-                        "marca": "Marca22",
-                        "modelo": "Modelo22"
-                    },
-                    "video": {
-                        "id": 25,
-                        "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                        "drone": {
-                            "id": 22,
-                            "marca": "Marca22",
-                            "modelo": "Modelo22"
-                        }
-                    }
+         [
+            {
+                "id": 1,
+                "latitude": "-27.593500",
+                "longitude": "-48.558540",
+                "orderDateAndTime": "2023-03-13 07:59:38",
+                "deliveryDateAndTime": "2023-04-13 11:00:00",
+                "deliveryStatus": "Delivered",
+                "dronefeeder": {
+                    "id": 1,
+                    "brand": "Heygelo",
+                    "modelName": "S90",
+                    "serialNumber": "1111"
                 },
-                {
-                    "id": 28,
-                    "latitude": "15.7975° S",
-                    "longitude": "47.8919° W",
-                    "dateAndTime": "2022-08-04T18:54:15.250+00:00",
-                    "deliveryStatus": false,
-                    "deliveryDateAndTime": null,
-                    "drone": {
-                        "id": 23,
-                        "marca": "Marca22",
-                        "modelo": "Modelo22"
-                    },
-                    "video": {
-                        "id": 27,
-                        "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                        "drone": {
-                            "id": 23,
-                            "marca": "Marca22",
-                            "modelo": "Modelo22"
-                        }
+                "video": {
+                    "id": 1,
+                    "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                    "dronefeeder": {
+                        "id": 1,
+                        "brand": "Heygelo",
+                        "modelName": "S90",
+                        "serialNumber": "1111"
                     }
                 }
-            ]
+            },
+            {
+                "id": 2,
+                "latitude": "-27.593501",
+                "longitude": "-48.558541",
+                "orderDateAndTime": "2023-03-13 09:37:23",
+                "deliveryDateAndTime": "2023-04-13 11:20:00",
+                "deliveryStatus": "In Transit",
+                "dronefeeder": {
+                    "id": 1,
+                    "brand": "Heygelo",
+                    "modelName": "S90",
+                    "serialNumber": "1111"
+                },
+                "video": null
+            },
+         ]
     ```
   <br/>
 
@@ -374,27 +370,29 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
   - Exemplo `response body`
     ```json
             {
-                "id": 2,
-                "latitude": "15.7975° S",
-                "longitude": "47.8919° W",
-                "dateAndTime": "2022-08-04T18:09:16.946+00:00",
-                "deliveryStatus": true,
-                "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
-                "drone": {
-                    "id": 22,
-                    "marca": "Marca22",
-                    "modelo": "Modelo22"
-                },
-                "video": {
-                    "id": 25,
-                    "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                    "drone": {
-                        "id": 22,
-                        "marca": "Marca22",
-                        "modelo": "Modelo22"
-                    }
-                }
+        "id": 1,
+        "latitude": "-27.593500",
+        "longitude": "-48.558540",
+        "orderDateAndTime": "2023-03-13 07:59:38",
+        "deliveryDateAndTime": "2023-04-13 11:00:00",
+        "deliveryStatus": "Delivered",
+        "dronefeeder": {
+            "id": 1,
+            "brand": "Heygelo",
+            "modelName": "S90",
+            "serialNumber": "1111"
+        },
+        "video": {
+            "id": 1,
+            "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+            "dronefeeder": {
+                "id": 1,
+                "brand": "Heygelo",
+                "modelName": "S90",
+                "serialNumber": "1111"
             }
+        }
+    }
     ```
   <br/>
 
@@ -409,35 +407,36 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
   - Exemplo `request body` 
     ``` json
         {
-                "latitude": "15.7975° S",
-                "longitude": "47.8919° W",
-                "drone": "1"
+          "latitude": "-27.593500",
+          "longitude": "-48.558540",
+          "orderDateAndTime": "2023-03-13 07:59:38",
+          "deliveryDateAndTime": "2023-04-13 11:00:00",
+          "deliveryStatus": "In transit",
+          "dronefeeder": {
+              "id": 1,
+              "brand": "Heygelo",
+              "modelName": "S90",
+              "serialNumber": "1111"
+              }
         }
     ```
 
   - Exemplo `response body`
     ```json
         {
-            "id": 2,
-            "latitude": "15.7975° S",
-            "longitude": "47.8919° W",
-            "dateAndTime": "2022-08-04T18:09:16.946+00:00",
-            "deliveryStatus": true,
-            "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
-            "drone": {
-                "id": 22,
-                "marca": "Marca22",
-                "modelo": "Modelo22"
-            },
-            "video": {
-                "id": 25,
-                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                "drone": {
-                    "id": 22,
-                    "marca": "Marca22",
-                    "modelo": "Modelo22"
-                }
-            }
+          "id": 1,
+          "latitude": "-27.593500",
+          "longitude": "-48.558540",
+          "orderDateAndTime": "2023-03-13 07:59:38",
+          "deliveryDateAndTime": "2023-04-13 11:00:00",
+          "deliveryStatus": "In transit",
+          "dronefeeder": {
+              "id": 1,
+              "brand": "Heygelo",
+              "modelName": "S90",
+              "serialNumber": "1111"
+          },
+          "video": null
         }
     ```
   <br/>
@@ -453,81 +452,55 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
   - Exemplo `request body` 
     ``` json
         {
-                "latitude": "15.7975° S",
-                "longitude": "47.8919° W",
-                "drone": "1"
-        }
+          "deliveryStatus": "Delivered",
+          "video": {
+              "id": 1,
+              "url" : "https://www.youtube.com/watch?v=qcsszdkjlXg",
+              "dronefeeder": {
+                "id": 1,
+                "brand": "Heygelo",
+                "modelName": "S90",
+                "serialNumber": "1111"
+              }
+          }
+       }
     ```
 
   - Exemplo `response body`
     ```json
         {
-            "id": 2,
-            "latitude": "15.7975° S",
-            "longitude": "47.8919° W",
-            "dateAndTime": "2022-08-04T18:09:16.946+00:00",
-            "deliveryStatus": true,
-            "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
-            "drone": {
-                "id": 22,
-                "marca": "Marca22",
-                "modelo": "Modelo22"
-            },
-            "video": {
-                "id": 25,
-                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                "drone": {
-                    "id": 22,
-                    "marca": "Marca22",
-                    "modelo": "Modelo22"
-                }
-            }
+           "id": 1,
+           "latitude": "-27.593500",
+           "longitude": "-48.558540",
+           "orderDateAndTime": "2023-03-13 07:59:38",
+           "deliveryDateAndTime": "2023-04-13 11:00:00",
+           "deliveryStatus": "Delivered",
+           "dronefeeder": {
+               "id": 1,
+               "brand": "Heygelo",
+               "modelName": "S90",
+               "serialNumber": "1111"
+           },
+           "video": {
+               "id": 1,
+               "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+               "dronefeeder": {
+                   "id": 1,
+                   "brand": "Heygelo",
+                   "modelName": "S90",
+                   "serialNumber": "1111"
+               }
+           }
         }
     ```
   <br/>
-
-
-### **Finaliza um delivery pelo id** 
-##### `PATCH` /dronefeeder/delivery/:id/finish
-
-  <br/>
-
-  Esse endpoint retorna status ``200`` e finaliza o Delivery cadastrado.
-
-  - Exemplo `response body`
-    ```json
-        {
-            "id": 2,
-            "latitude": "15.7975° S",
-            "longitude": "47.8919° W",
-            "dateAndTime": "2022-08-04T18:09:16.946+00:00",
-            "deliveryStatus": true,
-            "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
-            "drone": {
-                "id": 22,
-                "marca": "Marca22",
-                "modelo": "Modelo22"
-            },
-            "video": {
-                "id": 25,
-                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                "drone": {
-                    "id": 22,
-                    "marca": "Marca22",
-                    "modelo": "Modelo22"
-                }
-            }
-        }
-    ```
-  <br/>
-
 
 ### **Deleta um Delivery pelo id** 
 ##### `DELETE` /dronefeeder/delivery/:id
 
   <br/>
 
-  Esse endpoint retorna status ``200``
+  Esse endpoint retorna status ``200`` e deleta a delivery fornecida.
 
   <br/>
 
@@ -541,35 +514,29 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
 
   - Exemplo `response body`
     ```json
-        [
+         [
             {
                 "id": 1,
                 "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                "drone": {
+                "dronefeeder": {
                     "id": 1,
-                    "marca": "modelo1",
-                    "modelo": "marca1"
+                    "brand": "Heygelo",
+                    "modelName": "S90",
+                    "serialNumber": "1111"
                 }
             },
             {
                 "id": 2,
                 "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                "drone": {
-                    "id": 2,
-                    "marca": "modelo2",
-                    "modelo": "marca2"
-                }
-            },
-            {
-                "id": 3,
-                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                "drone": {
-                    "id": 3,
-                    "marca": "modelo3",
-                    "modelo": "marca3"
+                "dronefeeder": {
+                    "id": 1,
+                    "brand": "Heygelo",
+                    "modelName": "S90",
+                    "serialNumber": "1111"
                 }
             }
-        ]
+          ]
+
     ```
   <br/>
 
@@ -584,14 +551,15 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
   - Exemplo `response body`
     ```json
         {
-            "id": 3,
-            "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-            "drone": {
-                "id": 3,
-                "marca": "modelo3",
-                "modelo": "marca3"
-            }
-        }
+          "id": 1,
+          "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+          "dronefeeder": {
+              "id": 1,
+              "brand": "Heygelo",
+              "modelName": "S90",
+              "serialNumber": "1111"
+          }
+       }
     ```
   <br/>
 
@@ -605,28 +573,75 @@ DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
 
   - Exemplo `request body` 
     ``` json
-            {
-                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-                "drone": 3
+           {
+             "url" : "https://www.youtube.com/watch?v=qcsszdkjlXg",
+             "dronefeeder": {
+                   "id": 2,
+                   "brand": "Deerc",
+                   "modelName": "D20",
+                   "serialNumber": "2222"
+                 }
             }
     ```
 
   - Exemplo `response body`
     ```json
         {
-            "id": 3,
-            "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
-            "drone": {
-                "id": 3,
-                "marca": "modelo3",
-                "modelo": "marca3"
+           "id": 2,
+           "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+           "dronefeeder": {
+               "id": 2,
+               "brand": "Deerc",
+               "modelName": "D20",
+               "serialNumber": "2222"
+           }
+        }
+    ```
+  <br/>
+  
+  ### **Atualiza um video pelo id** 
+##### `PUT` /dronefeeder/video/:id
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e atualiza o Video cadastrado.
+
+  - Exemplo `request body` 
+    ``` json
+        {
+             "url" : "https://www.youtube.com/watch?v=qcsszdkjlXggggg",
+             "dronefeeder": {
+                   "id": 2,
+                   "brand": "Deerc",
+                   "modelName": "D20",
+                   "serialNumber": "2222"
+                 }
             }
+    ```
+
+  - Exemplo `response body`
+    ```json
+        {
+           "id": 2,
+           "url": "https://www.youtube.com/watch?v=qcsszdkjlXggggg",
+           "dronefeeder": {
+               "id": 2,
+               "brand": "Deerc",
+               "modelName": "D20",
+               "serialNumber": "2222"
+           }
         }
     ```
   <br/>
 
+### **Deleta um Video pelo id** 
+##### `DELETE` /dronefeeder/video/:id
 
+  <br/>
 
+  Esse endpoint retorna status ``200`` e deleta o Video fornecido.
+
+  <br/>
 
 ## :busts_in_silhouette: Autores :bust_in_silhouette:
 - [Isabela Rozani Floriano](https://github.com/isabelarfloriano)
