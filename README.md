@@ -71,7 +71,7 @@ POST /dronefeeder/delivery: cria uma nova entrega associada a um drone
 PUT /dronefeeder/delivery/{id}: atualiza uma entrega existente pelo seu ID
 DELETE /dronefeeder/delivery/{id}: exclui uma entrega existente pelo seu ID
 ```
-#### :package: Vídeos
+#### :movie_camera: Vídeos
 ```
 GET /dronefeeder/video: lista todos os vídeos cadastrados
 GET /dronefeeder/video/{id}: busca um video pelo seu ID
@@ -79,14 +79,442 @@ POST /dronefeeder/video: cria um novo vídeo associado a um drone
 PUT /dronefeeder/video/{id}: atualiza um vídeo existente pelo seu ID
 DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
 ```
+# :rotating_light: Documentação
+## :large_orange_diamond: Detalhamento dos endpoints dos Drones
+<br/>
 
-## :large_orange_diamond: Para realizar testes de requisição no Insomnia, Postman, etc...
-Utilize o objeto abaixo como modelo na rota 'localhost:8080/dronefeeder/drone':  
-{  
-"brand": "Deerc",  
-"modelName": "D20",  
-"serialNumber": "654321"  
-}
+### **Lista todos os drones** 
+##### `GET` /dronefeeder/drone
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o todos os Drones cadastrados.
+
+  - Exemplo `response body`
+    ```json
+        [
+            {
+                "id": 1,
+                "marca": "marca1",
+                "modelo": "modelo2"
+            },
+            {
+                "id": 2,
+                "marca": "marca2",
+                "modelo": "modelo2"
+            },
+            {
+                "id": 3,
+                "marca": "marca3",
+                "modelo": "modelo3"
+            }
+        ]
+    ```
+  <br/>
+
+
+### **Lista o drone pelo id** 
+##### `GET` /dronefeeder/drone/:id
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o Drone cadastrado.
+
+  - Exemplo `response body`
+    ```json
+        {
+            "id": 1,
+            "marca": "marca1",
+            "modelo": "modelo2"
+        }
+    ```
+  <br/>
+
+
+### **Cria um novo drone** 
+##### `POST` /dronefeeder/drone
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o Drone cadastrado.
+
+  - Exemplo `request body` 
+    ``` json
+        {
+            "marca": "marca",
+            "modelo": "modelo"
+        }
+    ```
+
+  - Exemplo `response body`
+    ```json
+        {
+            "id": 1,
+            "marca": "marca",
+            "modelo": "modelo"
+        }
+    ```
+  <br/>
+
+
+### **Atualiza um drone pelo id** 
+##### `PUT` /dronefeeder/drone/:id
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e atualiza o Drone cadastrado.
+
+  - Exemplo `request body` 
+    ``` json
+        {
+            "marca": "marca",
+            "modelo": "modelo"
+        }
+    ```
+
+  - Exemplo `response body`
+    ```json
+        {
+            "id": 1,
+            "marca": "marca1",
+            "modelo": "modelo2"
+        }
+    ```
+  <br/>
+
+
+### **Deleta um drone pelo id** 
+##### `DELETE` /dronefeeder/drone/:id
+
+  <br/>
+
+  Esse endpoint retorna status ``200``
+
+  <br/>
+
+## :large_orange_diamond: Detalhamento dos endpoints das Deliveries
+### **Lista todos os Deliverys** 
+##### `GET` /dronefeeder/delivery
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o todos os Deliverys cadastrados.
+
+  - Exemplo `response body`
+    ```json
+            [
+                {
+                    "id": 2,
+                    "latitude": "15.7975° S",
+                    "longitude": "47.8919° W",
+                    "dateAndTime": "2022-08-04T18:09:16.946+00:00",
+                    "deliveryStatus": true,
+                    "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
+                    "drone": {
+                        "id": 22,
+                        "marca": "Marca22",
+                        "modelo": "Modelo22"
+                    },
+                    "video": {
+                        "id": 25,
+                        "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                        "drone": {
+                            "id": 22,
+                            "marca": "Marca22",
+                            "modelo": "Modelo22"
+                        }
+                    }
+                },
+                {
+                    "id": 28,
+                    "latitude": "15.7975° S",
+                    "longitude": "47.8919° W",
+                    "dateAndTime": "2022-08-04T18:54:15.250+00:00",
+                    "deliveryStatus": false,
+                    "deliveryDateAndTime": null,
+                    "drone": {
+                        "id": 23,
+                        "marca": "Marca22",
+                        "modelo": "Modelo22"
+                    },
+                    "video": {
+                        "id": 27,
+                        "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                        "drone": {
+                            "id": 23,
+                            "marca": "Marca22",
+                            "modelo": "Modelo22"
+                        }
+                    }
+                }
+            ]
+    ```
+  <br/>
+
+
+### **Lista o Delivery pelo id** 
+##### `GET` /dronefeeder/delivery/:id
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o Delivery cadastrado.
+
+  - Exemplo `response body`
+    ```json
+            {
+                "id": 2,
+                "latitude": "15.7975° S",
+                "longitude": "47.8919° W",
+                "dateAndTime": "2022-08-04T18:09:16.946+00:00",
+                "deliveryStatus": true,
+                "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
+                "drone": {
+                    "id": 22,
+                    "marca": "Marca22",
+                    "modelo": "Modelo22"
+                },
+                "video": {
+                    "id": 25,
+                    "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                    "drone": {
+                        "id": 22,
+                        "marca": "Marca22",
+                        "modelo": "Modelo22"
+                    }
+                }
+            }
+    ```
+  <br/>
+
+
+### **Cria um novo Delivery** 
+##### `POST` /dronefeeder/delivery
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o Delivery cadastrado.
+
+  - Exemplo `request body` 
+    ``` json
+        {
+                "latitude": "15.7975° S",
+                "longitude": "47.8919° W",
+                "drone": "1"
+        }
+    ```
+
+  - Exemplo `response body`
+    ```json
+        {
+            "id": 2,
+            "latitude": "15.7975° S",
+            "longitude": "47.8919° W",
+            "dateAndTime": "2022-08-04T18:09:16.946+00:00",
+            "deliveryStatus": true,
+            "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
+            "drone": {
+                "id": 22,
+                "marca": "Marca22",
+                "modelo": "Modelo22"
+            },
+            "video": {
+                "id": 25,
+                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                "drone": {
+                    "id": 22,
+                    "marca": "Marca22",
+                    "modelo": "Modelo22"
+                }
+            }
+        }
+    ```
+  <br/>
+
+
+### **Atualiza um delivery pelo id** 
+##### `PUT` /dronefeeder/delivery/:id
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e atualiza o Delivery cadastrado.
+
+  - Exemplo `request body` 
+    ``` json
+        {
+                "latitude": "15.7975° S",
+                "longitude": "47.8919° W",
+                "drone": "1"
+        }
+    ```
+
+  - Exemplo `response body`
+    ```json
+        {
+            "id": 2,
+            "latitude": "15.7975° S",
+            "longitude": "47.8919° W",
+            "dateAndTime": "2022-08-04T18:09:16.946+00:00",
+            "deliveryStatus": true,
+            "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
+            "drone": {
+                "id": 22,
+                "marca": "Marca22",
+                "modelo": "Modelo22"
+            },
+            "video": {
+                "id": 25,
+                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                "drone": {
+                    "id": 22,
+                    "marca": "Marca22",
+                    "modelo": "Modelo22"
+                }
+            }
+        }
+    ```
+  <br/>
+
+
+### **Finaliza um delivery pelo id** 
+##### `PATCH` /dronefeeder/delivery/:id/finish
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e finaliza o Delivery cadastrado.
+
+  - Exemplo `response body`
+    ```json
+        {
+            "id": 2,
+            "latitude": "15.7975° S",
+            "longitude": "47.8919° W",
+            "dateAndTime": "2022-08-04T18:09:16.946+00:00",
+            "deliveryStatus": true,
+            "deliveryDateAndTime": "2022-08-04T18:53:44.599+00:00",
+            "drone": {
+                "id": 22,
+                "marca": "Marca22",
+                "modelo": "Modelo22"
+            },
+            "video": {
+                "id": 25,
+                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                "drone": {
+                    "id": 22,
+                    "marca": "Marca22",
+                    "modelo": "Modelo22"
+                }
+            }
+        }
+    ```
+  <br/>
+
+
+### **Deleta um Delivery pelo id** 
+##### `DELETE` /dronefeeder/delivery/:id
+
+  <br/>
+
+  Esse endpoint retorna status ``200``
+
+  <br/>
+
+## :large_orange_diamond: Detalhamento dos endpoints dos Vídeos
+### **Lista todos os videos** 
+##### `GET` /dronefeeder/video
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o todos os Videos cadastrados.
+
+  - Exemplo `response body`
+    ```json
+        [
+            {
+                "id": 1,
+                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                "drone": {
+                    "id": 1,
+                    "marca": "modelo1",
+                    "modelo": "marca1"
+                }
+            },
+            {
+                "id": 2,
+                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                "drone": {
+                    "id": 2,
+                    "marca": "modelo2",
+                    "modelo": "marca2"
+                }
+            },
+            {
+                "id": 3,
+                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                "drone": {
+                    "id": 3,
+                    "marca": "modelo3",
+                    "modelo": "marca3"
+                }
+            }
+        ]
+    ```
+  <br/>
+
+
+### **Lista o video pelo id** 
+##### `GET` /dronefeeder/video/:id
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o Video cadastrado.
+
+  - Exemplo `response body`
+    ```json
+        {
+            "id": 3,
+            "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+            "drone": {
+                "id": 3,
+                "marca": "modelo3",
+                "modelo": "marca3"
+            }
+        }
+    ```
+  <br/>
+
+
+### **Cria um novo Video** 
+##### `POST` /dronefeeder/video
+
+  <br/>
+
+  Esse endpoint retorna status ``200`` e o Video cadastrado.
+
+  - Exemplo `request body` 
+    ``` json
+            {
+                "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+                "drone": 3
+            }
+    ```
+
+  - Exemplo `response body`
+    ```json
+        {
+            "id": 3,
+            "url": "https://www.youtube.com/watch?v=qcsszdkjlXg",
+            "drone": {
+                "id": 3,
+                "marca": "modelo3",
+                "modelo": "marca3"
+            }
+        }
+    ```
+  <br/>
+
+
+
 
 ## :busts_in_silhouette: Autores :bust_in_silhouette:
 - [Isabela Rozani Floriano](https://github.com/isabelarfloriano)
