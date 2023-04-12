@@ -40,7 +40,11 @@ public class Delivery {
 
   public Delivery() {}
 
-  public Delivery( String latitude, String longitude, String orderDateAndTime, String deliveryDateAndTime,
+  /**
+   * Constructor.
+   */
+  public Delivery(String latitude, String longitude,
+      String orderDateAndTime, String deliveryDateAndTime,
       String deliveryStatus, DroneFeeder dronefeeder) {
     this.latitude = latitude;
     this.longitude = longitude;
@@ -86,7 +90,7 @@ public class Delivery {
     return orderDateAndTime;
   }
 
-  public void setOderDateAndTime(String orderDateAndTime) {
+  public void setOrderDateAndTime(String orderDateAndTime) {
     this.orderDateAndTime = orderDateAndTime;
   }
 

@@ -28,7 +28,7 @@ public class VideoService {
    * findAll method.
    */
   public List<Video> findAll() {
-    return videoRepository.findAll();  
+    return videoRepository.findAll();
   }
   
   /**
