@@ -82,9 +82,8 @@ PUT /dronefeeder/video/{id}: atualiza um vídeo existente pelo seu ID
 DELETE /dronefeeder/video/{id}: exclui um vídeo existente pelo seu ID
 ```
 ## Associações das tabelas
-<div align="center">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpL8tgwBXKIDLVDhX7HQe_shkDCnoZh-sH-g&usqp=CAU" width="500px" />
-</div>
+![Minha imagem](./images/diagrama-de-relacionamento.png)
+
 
 ### :flying_saucer: :package: Drone - Delivery
   * Uma entrega pode estar associada a um drone
