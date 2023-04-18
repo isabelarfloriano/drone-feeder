@@ -39,6 +39,9 @@ O Drone Feeder foi desenvolvido com Java utilizando Spring-boot, para coletar in
  - Instale as dependências
  `mvn install`.
  - Configure o arquivo application.yml, localizado no caminho (src/main/resources), alterando os campos username e password com as suas informações locais do MySQL.
+ - Certifique-se de que o MySQL está inicializado.
+ - Execute o comando
+ `mvn spring-boot:run`.
 
 ## :pushpin: Para executar o Docker
 -   Verifique se as portas 3306 e 8080 estão disponíveis com os respectivos comandos `sudo lsof -i :3306` e `telnet localhost 8080`.
